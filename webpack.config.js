@@ -3,6 +3,7 @@ const path = require('path');
 module.exports = {
   mode: 'production',
   entry: './index.ts',
+
   module: {
     rules: [
       {
@@ -12,14 +13,20 @@ module.exports = {
       },
     ],
   },
+
   resolve: {
     alias: {
       conditions: path.resolve(__dirname, 'src/conditions/'),
     },
     extensions: ['.tsx', '.ts', '.js'],
   },
+
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'build'),
+  },
+
+  watchOptions: {
+    ignored: '/node_modules/',
   },
 };

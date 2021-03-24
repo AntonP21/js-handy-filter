@@ -1,7 +1,7 @@
 {
   "extends": "airbnb-typescript/base",
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "require-jsdoc-except"],
   "parserOptions": { "project": "./tsconfig.json" },
   "env": {
     "browser": true,
@@ -47,6 +47,28 @@
     "object-curly-newline": "off",
     "operator-linebreak": "off",
     "prefer-destructuring": ["error", { "object": true, "array": false }],
+    "require-jsdoc-except/require-jsdoc": [
+      "error",
+      {
+        "require": {
+          "ArrowFunctionExpression": true,
+          "ClassDeclaration": true,
+          "FunctionDeclaration": true,
+          "FunctionExpression": true,
+          "MethodDefinition": true
+        },
+        "ignore": [
+          "componentDidMount",
+          "componentDidUpdate",
+          "componentWillUnmount",
+          "constructor",
+          "getDerivedStateFromProps",
+          "getSnapshotBeforeUpdate",
+          "render",
+          "shouldComponentUpdate"
+        ]
+      }
+    ],
     "spaced-comment": ["error", "always"]
   }
 }
