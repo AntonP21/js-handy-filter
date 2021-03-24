@@ -1,6 +1,7 @@
 import { Condition, ICondition, PlainCondition, SimpleConditionKey, StringCondition } from 'conditions/types';
 import { isStringCondition } from 'conditions/lib/type-guards';
-import { getSimpleConditionClassByKey } from 'conditions/lib/utils';
+
+import { getSimpleConditionClassByKey } from './lib/utils';
 
 /**
  * The class for parsing conditions.
