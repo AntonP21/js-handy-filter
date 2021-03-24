@@ -7,7 +7,7 @@
     "build": "webpack build",
     "lint": "eslint --no-error-on-unmatched-pattern --quiet --ext .js --ext .ts src/*",
     "start": "webpack watch",
-    "test": "jest --watch"
+    "test": "jest --watchAll"
   },
   "devDependencies": {
     "@types/jest": "^26.0.21",
