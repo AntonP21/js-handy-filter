@@ -5,5 +5,5 @@ module.exports = {
     '^conditions/(.*)': '<rootDir>/src/conditions/$1',
     '^lib/(.*)': '<rootDir>/src/lib/$1',
   },
-  modulePathIgnorePatterns: ['build/', '<rootDir>/src/.*/?__tests__/.*/?lib/'],
+  modulePathIgnorePatterns: ['build/', 'devBuild/', '<rootDir>/src/.*/?__tests__/.*/?lib/'],
 };

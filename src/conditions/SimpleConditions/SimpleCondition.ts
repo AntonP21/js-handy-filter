@@ -1,12 +1,12 @@
 import { TypeError } from 'conditions/errors';
-import { CheckableValue, Condition, SimpleValue } from 'conditions/types';
+import { CheckableValue, ICondition, SimpleValue } from 'conditions/types';
 import { isAnyObject, isSimpleValue } from 'conditions/lib/type-guards';
 import { getValue } from 'conditions/lib/utils';
 
 /**
  * The base class for simple conditions.
  */
-export default abstract class SimpleCondition implements Condition {
+export default abstract class SimpleCondition implements ICondition {
   readonly field?: string;
   readonly value: SimpleValue;
 
@@ -18,7 +18,10 @@ export default abstract class SimpleCondition implements Condition {
   constructor(field: string, value: SimpleValue);
   constructor(field: string | SimpleValue, value?: SimpleValue) {
     if (value !== undefined) {
-      this.field = field as string;
+      if (field !== '') {
+        this.field = field as string;
+      }
+
       this.value = value;
     } else {
       this.value = field;

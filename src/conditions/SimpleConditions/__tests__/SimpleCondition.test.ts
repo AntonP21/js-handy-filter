@@ -60,5 +60,14 @@ describe('SimpleCondition tests', () => {
 
       expect(() => testInstance.check(someNumValue)).toThrow(TypeError);
     });
+
+    it('should invoke validate with correct args when "field" is empty string', () => {
+      const testInstance = new TestClass('', someNumValue);
+      const validateSpy = sinon.spy(testInstance, 'validate');
+
+      testInstance.check(someNumValue);
+
+      expect(validateSpy.getCall(0).args).toStrictEqual([someNumValue]);
+    });
   });
 });
