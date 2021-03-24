@@ -6,7 +6,7 @@ import { AnyObject, SimpleValue } from '../types';
  * @param value - The value to check.
  */
 export const isAnyObject = (value: any): value is AnyObject => (
-  typeof value === 'object'
+  value !== null && typeof value === 'object'
 );
 
 /**
@@ -18,11 +18,13 @@ export const isNull = (value: any): value is null => (
   value === null
 );
 
+const SIMPLE_TYPES = ['number', 'bigint', 'string', 'boolean'];
+
 /**
  * The function for checking is a value SimpleValue.
  *
  * @param value - The value to check.
  */
 export const isSimpleValue = (value: any): value is SimpleValue => (
-  value === null || typeof value in ['number', 'bigint', 'string', 'boolean']
+  value === null || SIMPLE_TYPES.includes(typeof value)
 );
