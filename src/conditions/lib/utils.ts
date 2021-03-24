@@ -1,4 +1,4 @@
-import { Greater, GreaterEqual } from 'conditions/SimpleConditions';
+import { Greater, GreaterOrEqual } from 'conditions/SimpleConditions';
 import { SimpleConditionConstructor } from 'conditions/SimpleConditions/types';
 import { TypeError } from 'conditions/errors';
 import { AnyObject, SimpleValue, SimpleConditionKey } from 'conditions/types';
@@ -11,7 +11,7 @@ import { AnyObject, SimpleValue, SimpleConditionKey } from 'conditions/types';
 export const getSimpleConditionClassByKey = (key: SimpleConditionKey): SimpleConditionConstructor => {
   switch (key) {
     case 'gt': return Greater;
-    case 'gte': return GreaterEqual;
+    case 'gte': return GreaterOrEqual;
     default: throw new TypeError(`${key} is not assignable to type SimpleConditionKey`);
   }
 };

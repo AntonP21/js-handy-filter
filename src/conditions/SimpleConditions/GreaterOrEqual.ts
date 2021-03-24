@@ -6,7 +6,7 @@ import { isNull } from 'conditions/lib/type-guards';
 /**
  * The class for the condition "greater or equal than".
  */
-export default class GreaterEqual extends SimpleCondition {
+export default class GreaterOrEqual extends SimpleCondition {
   /**
    * The method for validating the condition.
    *
