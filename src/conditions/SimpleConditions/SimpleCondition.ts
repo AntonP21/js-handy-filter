@@ -25,7 +25,7 @@ export default abstract class SimpleCondition implements Condition {
     }
   }
 
-  abstract validate(value: SimpleValue): boolean;
+  protected abstract validate(value: SimpleValue): boolean;
 
   check = (value: CheckableValue) => {
     if (this.field) {

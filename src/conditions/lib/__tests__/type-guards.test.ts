@@ -12,7 +12,7 @@ describe('Type guards tests', () => {
       [false, 'string'],
       [false, true],
       [false, false],
-    ])('should return %p if %p passed', (expected, value) => {
+    ])('should return %p if %p is passed', (expected, value) => {
       expect(isAnyObject(value)).toBe(expected);
     });
   });
@@ -26,7 +26,7 @@ describe('Type guards tests', () => {
       [false, 'string'],
       [false, true],
       [false, false],
-    ])('should return %p if %p passed', (expected, value) => {
+    ])('should return %p if %p is passed', (expected, value) => {
       expect(isNull(value)).toBe(expected);
     });
   });
@@ -40,7 +40,7 @@ describe('Type guards tests', () => {
       [true, true],
       [true, false],
       [false, undefined],
-    ])('should return %p if %p passed', (expected, value) => {
+    ])('should return %p if %p is passed', (expected, value) => {
       expect(isSimpleValue(value)).toBe(expected);
     });
   });

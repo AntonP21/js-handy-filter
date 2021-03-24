@@ -15,5 +15,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Installing libs
+        run: yarn install
+
       - name: Testing
         run: yarn run jest --ci

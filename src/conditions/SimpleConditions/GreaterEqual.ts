@@ -12,7 +12,7 @@ export default class GreaterEqual extends SimpleCondition {
    *
    * @param value - The value to validation;
    */
-  validate(value: SimpleValue): boolean {
+  protected validate(value: SimpleValue): boolean {
     if (isNull(value) || isNull(this.value)) {
       throw new TypeError('Null cannot be checked by condition "greater or equal than"');
     }
