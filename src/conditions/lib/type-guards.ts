@@ -1,3 +1,5 @@
+import { hasProperty } from 'lib/utils';
+
 import { AnyObject, ICondition, PlainCondition, SimpleConditionKey, SimpleValue } from '../types';
 
 import { SIMPLE_CONDITION_KEYS, SIMPLE_TYPES } from './constants';
@@ -53,5 +55,5 @@ export const isSimpleConditionKey = (value: any): value is SimpleConditionKey =>
  * @param value - The value to check;
  */
 export const isICondition = (value: any): value is ICondition => (
-  typeof value === 'object' && !isNull(value) && Object.prototype.hasOwnProperty.call(value, 'check')
+  typeof value === 'object' && !isNull(value) && hasProperty(value, 'check')
 );
