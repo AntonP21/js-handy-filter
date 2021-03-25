@@ -7,7 +7,7 @@ import { CheckableValue, Condition, ICondition } from '../types';
 export default abstract class LogicalCondition implements ICondition {
   protected conditions: ICondition[];
 
-  protected constructor(...args: Condition[]) {
+  constructor(...args: Condition[]) {
     this.conditions = ConditionParser.parse(args);
   }
 
