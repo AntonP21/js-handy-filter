@@ -1,6 +1,6 @@
 import { TypeError } from 'conditions/errors';
 
-import { gte } from '../aliases';
+import { gte } from '../../lib/aliases';
 
 describe('GreaterOrEqual tests', () => {
   const limit = 1000;

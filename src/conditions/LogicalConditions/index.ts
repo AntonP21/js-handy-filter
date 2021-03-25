@@ -1,1 +1,1 @@
-export { default as LogicalCondition } from './LogicalCondition';
+export { default as LogicalCondition } from './conditions/LogicalCondition';

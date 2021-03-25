@@ -1,6 +1,6 @@
 import { SimpleValue } from '../types';
 
-import SimpleCondition from './SimpleCondition';
+import SimpleCondition from './conditions/SimpleCondition';
 
 export type SimpleConditionConstructor = (
   (new(value: SimpleValue) => SimpleCondition) |

@@ -1,7 +1,7 @@
-import { SimpleConditionConstructor } from './types';
+import { SimpleConditionConstructor } from '../types';
 
-import Greater from './Greater';
-import GreaterOrEqual from './GreaterOrEqual';
+import Greater from '../conditions/Greater';
+import GreaterOrEqual from '../conditions/GreaterOrEqual';
 
 /**
  * The alias for "greater than" condition.

@@ -1,6 +1,6 @@
-import { TypeError } from '../errors';
-import { SimpleValue } from '../types';
-import { isNull } from '../lib/type-guards';
+import { TypeError } from '../../errors';
+import { SimpleValue } from '../../types';
+import { isNull } from '../../lib/type-guards';
 
 import SimpleCondition from './SimpleCondition';
 
