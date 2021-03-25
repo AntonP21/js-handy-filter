@@ -1,6 +1,6 @@
 import LogicalCondition from './LogicalCondition';
 
-import { CheckableValue } from '../types';
+import { CheckableValue } from '../../types';
 
 /**
  * The class for "OR" condition.

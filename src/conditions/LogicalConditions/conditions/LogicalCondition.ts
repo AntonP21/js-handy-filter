@@ -1,5 +1,5 @@
-import ConditionParser from '../ConditionParser';
-import { CheckableValue, Condition, ICondition } from '../types';
+import ConditionParser from '../../ConditionParser';
+import { CheckableValue, Condition, ICondition } from '../../types';
 
 /**
  * The base class for logical conditions.

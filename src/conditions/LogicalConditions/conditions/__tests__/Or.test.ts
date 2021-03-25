@@ -1,4 +1,4 @@
-import { or } from '../aliases';
+import { and, or } from '../../lib/aliases';
 
 describe('"Or" condition tests', () => {
   describe('All conditions is true', () => {
@@ -9,12 +9,12 @@ describe('"Or" condition tests', () => {
       [{ numField: 11 }, ['numField__gt', 20], ['numField__gte', 11]],
       [
         { numField: 10, obj: { numField: 100 } },
-        or(['numField__gt', 11], ['obj.numField__gt', 9.99]),
+        and(['numField__gt', 9], ['obj.numField__gt', 99.99]),
         ['numField__gte', 11],
       ],
       [
         { numField: 10, obj: { numField: 100 } },
-        or(['numField__gt', 11], ['obj.numField__gt', 200]),
+        and(['numField__gt', 9], ['obj.numField__gt', 200]),
         ['obj.numField__gte', 100],
       ],
     ])('#%# should return true when at least one condition is true', (checkableValue, ...conditions) => {
@@ -29,12 +29,12 @@ describe('"Or" condition tests', () => {
       [{ numField: 11 }, ['numField__gt', 20], ['numField__gte', 12]],
       [
         { numField: 10, obj: { numField: 100 } },
-        or(['numField__gt', 11], ['obj.numField__gt', 1000]),
+        and(['numField__gt', 11], ['obj.numField__gt', 1000]),
         ['numField__gte', 11],
       ],
       [
         { numField: 10, obj: { numField: 100 } },
-        or(['numField__gt', 11], ['obj.numField__gt', 200]),
+        and(['numField__gt', 11], ['obj.numField__gt', 200]),
         ['obj.numField__gte', 1000],
       ],
     ])('#%# should return false when all conditions is false', (checkableValue, ...conditions) => {
