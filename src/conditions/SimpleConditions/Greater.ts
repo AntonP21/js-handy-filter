@@ -1,7 +1,8 @@
-import { SimpleCondition } from 'conditions/SimpleConditions';
-import { TypeError } from 'conditions/errors';
-import { SimpleValue } from 'conditions/types';
-import { isNull } from 'conditions/lib/type-guards';
+import { TypeError } from '../errors';
+import { SimpleValue } from '../types';
+import { isNull } from '../lib/type-guards';
+
+import SimpleCondition from './SimpleCondition';
 
 /**
  * The class for the condition "greater than".

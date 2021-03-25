@@ -1,5 +1,8 @@
-import { Condition, ICondition, PlainCondition, SimpleConditionKey, StringCondition } from 'conditions/types';
-import { isStringCondition } from 'conditions/lib/type-guards';
+import { isArray } from 'lib/type-guards';
+
+import { ParseError } from '../errors';
+import { Condition, ICondition, PlainCondition, SimpleConditionKey, StringCondition } from '../types';
+import { isICondition, isPlainCondition, isSimpleConditionKey } from '../lib/type-guards';
 
 import { getSimpleConditionClassByKey } from './lib/utils';
 
@@ -7,14 +10,34 @@ import { getSimpleConditionClassByKey } from './lib/utils';
  * The class for parsing conditions.
  */
 export class ConditionParser {
+  parse(condition: Condition): ICondition;
+  parse(conditions: Condition[]): ICondition[];
   /**
    * The method for parsing conditions.
-   *
-   * @param conditions - Conditions to parse;
    */
-  public parse = (conditions: Condition[]): ICondition[] => conditions.map((condition) => (
-    isStringCondition(condition) ? this.parsePlainCondition(condition) : condition
-  ));
+  parse(conditions: Condition | Condition[]): ICondition | ICondition[] {
+    if (isPlainCondition(conditions)) {
+      return this.parseCondition(conditions);
+    }
+
+    if (isArray(conditions)) {
+      return conditions.map(this.parseCondition);
+    }
+
+    throw new ParseError(`Unable to parse condition(s) ${conditions}`);
+  }
+
+  protected parseCondition = (condition: Condition): ICondition => {
+    if (isPlainCondition(condition)) {
+      return this.parsePlainCondition(condition);
+    }
+
+    if (isICondition(condition)) {
+      return condition;
+    }
+
+    throw new ParseError(`Unable to parse condition ${condition}`);
+  };
 
   /**
    * The method for parsing a plain condition.
@@ -32,13 +55,21 @@ export class ConditionParser {
    * @param condition - Conditions to parse;
    */
   protected parseStringCondition = (condition: StringCondition): [string, SimpleConditionKey] => {
-    const parsed = condition.split('__');
+    const parsed = condition.split('__', 2);
+    let path = '';
+    let key;
 
     if (parsed.length === 2) {
-      return parsed as [string, SimpleConditionKey];
+      ([path, key] = parsed);
+    } else {
+      key = parsed[0];
     }
 
-    return ['', parsed[0]] as [string, SimpleConditionKey];
+    if (!isSimpleConditionKey(key)) {
+      throw new ParseError(`${key} is not supported`);
+    }
+
+    return [path, key];
   };
 }
 

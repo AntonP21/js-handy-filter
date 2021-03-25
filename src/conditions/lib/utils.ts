@@ -1,4 +1,4 @@
-import { AnyObject, SimpleValue } from 'conditions/types';
+import { AnyObject, SimpleValue } from '../types';
 
 /**
  * The function for getting a value from an object by a string path.

@@ -1,6 +1,6 @@
-import { AnyObject, SimpleValue, PlainCondition } from '../types';
+import { AnyObject, ICondition, PlainCondition, SimpleConditionKey, SimpleValue } from '../types';
 
-import { SIMPLE_TYPES } from './constants';
+import { SIMPLE_CONDITION_KEYS, SIMPLE_TYPES } from './constants';
 
 /**
  * The function for checking is a value null.
@@ -30,10 +30,28 @@ export const isSimpleValue = (value: any): value is SimpleValue => (
 );
 
 /**
- * The function for checking is a value StringCondition.
+ * The function for checking is a value PlainCondition.
  *
  * @param value - The value to check;
  */
-export const isStringCondition = (value: any): value is PlainCondition => (
+export const isPlainCondition = (value: any): value is PlainCondition => (
   Array.isArray(value) && value.length === 2 && typeof value[0] === 'string' && isSimpleValue(value[1])
+);
+
+/**
+ * The function for checking is a value SimpleConditionKey.
+ *
+ * @param value - The value to check;
+ */
+export const isSimpleConditionKey = (value: any): value is SimpleConditionKey => (
+  SIMPLE_CONDITION_KEYS.includes(value)
+);
+
+/**
+ * The function for checking is a value ICondition.
+ *
+ * @param value - The value to check;
+ */
+export const isICondition = (value: any): value is ICondition => (
+  typeof value === 'object' && !isNull(value) && Object.prototype.hasOwnProperty.call(value, 'check')
 );

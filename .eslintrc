@@ -16,6 +16,7 @@
     "import/extensions": "off",
     "import/named": "off",
     "implicit-arrow-linebreak": "off",
+    "import/no-named-as-default": "off",
     "import/no-unresolved": "off",
     "import/prefer-default-export": "off",
     "function-paren-newline": "off",

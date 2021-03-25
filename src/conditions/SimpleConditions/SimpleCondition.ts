@@ -1,7 +1,7 @@
-import { TypeError } from 'conditions/errors';
-import { CheckableValue, ICondition, SimpleValue } from 'conditions/types';
-import { isAnyObject, isSimpleValue } from 'conditions/lib/type-guards';
-import { getValue } from 'conditions/lib/utils';
+import { TypeError } from '../errors';
+import { CheckableValue, ICondition, SimpleValue } from '../types';
+import { isAnyObject, isSimpleValue } from '../lib/type-guards';
+import { getValue } from '../lib/utils';
 
 /**
  * The base class for simple conditions.
