@@ -1,4 +1,4 @@
-import { Greater, GreaterOrEqual } from '../../SimpleConditions';
+import { Equal, Greater, GreaterOrEqual, Less, LessOrEqual, NotEqual } from '../../SimpleConditions';
 import { ISimpleConditionConstructor } from '../../SimpleConditions/types';
 import { TypeError } from '../../errors';
 import { SimpleConditionKey } from '../../types';
@@ -10,8 +10,12 @@ import { SimpleConditionKey } from '../../types';
  */
 export const getSimpleConditionClassByKey = (key: SimpleConditionKey): ISimpleConditionConstructor => {
   switch (key) {
+    case 'eq': return Equal;
     case 'gt': return Greater;
     case 'gte': return GreaterOrEqual;
+    case 'lt': return Less;
+    case 'lte': return LessOrEqual;
+    case 'ne': return NotEqual;
     default: throw new TypeError(`${key} is not assignable to type SimpleConditionKey`);
   }
 };

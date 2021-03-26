@@ -1,4 +1,4 @@
-export type SimpleValue = string | number | boolean | bigint | null;
+export type SimpleValue = bigint | boolean | null | number | string;
 
 export type CheckableValue = SimpleValue | AnyObject;
 
@@ -10,10 +10,7 @@ export interface ICondition {
   check: (value: CheckableValue) => boolean,
 }
 
-export type SimpleConditionKey = (
-  'gt' |
-  'gte'
-);
+export type SimpleConditionKey = 'eq' | 'gt' | 'gte' | 'lt' | 'lte' | 'ne';
 
 export type StringCondition = `${string}__${SimpleConditionKey}` | SimpleConditionKey;
 

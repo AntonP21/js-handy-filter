@@ -1,20 +1,20 @@
-import { GreaterOrEqual, gte } from 'conditions';
+import { LessOrEqual, lte } from 'conditions';
 import { TypeError } from 'conditions/errors';
 
-describe('GreaterOrEqual tests', () => {
+describe('LessOrEqual tests', () => {
   const limit = 1000;
-  let testInstance: GreaterOrEqual;
+  let testInstance: LessOrEqual;
 
   beforeEach(() => {
-    testInstance = gte(limit);
+    testInstance = lte(limit);
   });
 
-  it('should return true when a passed value is greater than a limit', () => {
-    expect(testInstance.check(1001)).toBeTruthy();
+  it('should return true when a passed value is less than a limit', () => {
+    expect(testInstance.check(999)).toBeTruthy();
   });
 
-  it('should return false when a passed value is less than a limit', () => {
-    expect(testInstance.check(999)).toBeFalsy();
+  it('should return false when a passed value is greater than a limit', () => {
+    expect(testInstance.check(1001)).toBeFalsy();
   });
 
   it('should return true when a passed value is equal to a limit', () => {
@@ -27,7 +27,7 @@ describe('GreaterOrEqual tests', () => {
 
   it('should throw TypeError when null is passed as a limit', () => {
     const someValue = 'some string';
-    testInstance = gte(null);
+    testInstance = lte(null);
 
     expect(() => testInstance.check(someValue)).toThrow(TypeError);
   });

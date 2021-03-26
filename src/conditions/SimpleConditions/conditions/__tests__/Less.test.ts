@@ -1,20 +1,20 @@
-import { Greater, gt } from 'conditions';
+import { Less, lt } from 'conditions';
 import { TypeError } from 'conditions/errors';
 
-describe('Greater tests', () => {
+describe('Less tests', () => {
   const limit = 1000;
-  let testInstance: Greater;
+  let testInstance: Less;
 
   beforeEach(() => {
-    testInstance = gt(limit);
+    testInstance = lt(limit);
   });
 
-  it('should return true when a passed value is greater than a limit', () => {
-    expect(testInstance.check(1001)).toBeTruthy();
+  it('should return true when a passed value is less than a limit', () => {
+    expect(testInstance.check(999)).toBeTruthy();
   });
 
-  it('should return false when a passed value is less than a limit', () => {
-    expect(testInstance.check(999)).toBeFalsy();
+  it('should return false when a passed value is greater than a limit', () => {
+    expect(testInstance.check(1001)).toBeFalsy();
   });
 
   it('should return false when a passed value is equal to a limit', () => {
@@ -27,7 +27,7 @@ describe('Greater tests', () => {
 
   it('should throw TypeError when null is passed as a limit', () => {
     const someValue = 'some string';
-    testInstance = gt(null);
+    testInstance = lt(null);
 
     expect(() => testInstance.check(someValue)).toThrow(TypeError);
   });
