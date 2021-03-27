@@ -17,27 +17,21 @@ export class ConditionParser {
    */
   parse(conditions: Condition | Condition[]): ICondition | ICondition[] {
     if (isPlainCondition(conditions)) {
-      return this.parseCondition(conditions);
+      return this.parsePlainCondition(conditions);
+    }
+
+    if (isICondition(conditions)) {
+      return conditions;
     }
 
     if (isArray(conditions)) {
-      return conditions.map(this.parseCondition);
+      // In order to recursion works here need use an arrow function.
+      // conditions.map(this.parse) does not work here.
+      return conditions.map((condition) => this.parse(condition));
     }
 
-    throw new ParseError(`Unable to parse condition(s) ${conditions}`);
+    throw new ParseError(`Unable to parse ${conditions}`);
   }
-
-  protected parseCondition = (condition: Condition): ICondition => {
-    if (isPlainCondition(condition)) {
-      return this.parsePlainCondition(condition);
-    }
-
-    if (isICondition(condition)) {
-      return condition;
-    }
-
-    throw new ParseError(`Unable to parse condition ${condition}`);
-  };
 
   /**
    * The method for parsing a plain condition.
