@@ -129,4 +129,44 @@ describe('The Filter tests', () => {
       });
     },
   );
+
+  describe('Tests Filter Options', () => {
+    describe('The "addTo" option', () => {
+      let values: any[];
+
+      beforeEach(() => {
+        values = [4, 1, 60, 3, 5, 10, 50, 20, 100, 30, 1000];
+      });
+
+      it('should add new condition to the latest if the option is not passed', () => {
+        filter = new Filter(lt(0))
+          .or(gt(50))
+          .and(lte(100))
+          .or(ne(60))
+          .and(eq(30));
+
+        expect(filter.filter(values)).toStrictEqual([60, 100, 30]);
+      });
+
+      it('should add new condition to the latest if the option is passed', () => {
+        filter = new Filter(lt(0), { addTo: 'latest' })
+          .or(gt(50))
+          .and(lte(100))
+          .or(ne(60))
+          .and(eq(30));
+
+        expect(filter.filter(values)).toStrictEqual([60, 100, 30]);
+      });
+
+      it('should add new condition to all previous ones if the option is passed', () => {
+        filter = new Filter(lt(0), { addTo: 'all' })
+          .or(gt(50))
+          .and(lte(100))
+          .or(ne(60))
+          .and(eq(30));
+
+        expect(filter.filter(values)).toStrictEqual([30]);
+      });
+    });
+  });
 });
