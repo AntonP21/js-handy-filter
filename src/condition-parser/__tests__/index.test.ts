@@ -1,8 +1,8 @@
 import { Equal, Greater, GreaterOrEqual, gt, gte, eq, lt } from 'conditions/SimpleConditions';
 import { And, Or, and, or } from 'conditions/LogicalConditions';
 import { isICondition } from 'conditions/lib/type-guards';
-import { ParseError } from 'conditions/errors';
 import { Condition } from 'conditions/types';
+import { ParseError } from 'condition-parser/errors';
 
 import ConditionParser from '../index';
 

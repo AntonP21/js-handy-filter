@@ -29,6 +29,11 @@ export default class Filter {
     };
   }
 
+  /**
+   * The method for filtering arrays.
+   *
+   * @param target - The array to filter;
+   */
   public filter = <Type extends CheckableValue>(target: Type[]) => {
     const { conditionStack } = this;
     const condition = conditionStack.length === 1 ? conditionStack[0] : or(...conditionStack);
@@ -36,6 +41,14 @@ export default class Filter {
     return conditionStack.length !== 0 ? target.filter(condition.check) : target;
   };
 
+  /**
+   * The method for adding new conditions to the filter through logical "and".
+   *
+   * By default the method add new conditions to the latest available condition in the filter.
+   * See FilterOptions.addTo to change this behavior.
+   *
+   * @param conditions - New conditions for filtering;
+   */
   public and = (...conditions: Condition[]) => {
     const { conditionStack, options } = this;
     const parsedConditions = ConditionParser.parse(conditions);
@@ -50,6 +63,14 @@ export default class Filter {
     return filter;
   };
 
+  /**
+   * The method for adding new conditions to the filter through logical "or".
+   *
+   * By default the method add new conditions to the latest available condition in the filter.
+   * See FilterOptions.addTo to change this behavior.
+   *
+   * @param conditions - New conditions for filtering;
+   */
   public or = (...conditions: Condition[]) => {
     const { conditionStack, options } = this;
     const stack = [...conditionStack];
