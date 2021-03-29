@@ -66,4 +66,8 @@ describe('ConditionParser tests', () => {
   ])('should throw a ParseError when incorrect condition %p is passed', (expected) => {
     expect(() => ConditionParser.parse(expected as any)).toThrow(ParseError);
   });
+
+  it('should work with empty arrays', () => {
+    expect(ConditionParser.parse([])).toHaveLength(0);
+  });
 });

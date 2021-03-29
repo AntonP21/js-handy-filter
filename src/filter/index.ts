@@ -11,57 +11,53 @@ import { FilterOptions } from './types';
  * The Filter filters arrays using the "Condition syntax",
  *  which allow to work in a declarative style.
  */
-export default class Filter<Type extends CheckableValue> {
-  private condition?: ICondition;
-  private readonly defaultMerge: typeof and | typeof or;
-  private readonly target: Type[];
-  private readonly options?: FilterOptions<Type>;
+export default class Filter {
+  private conditionStack: ICondition[] = [];
+  private readonly options: Required<FilterOptions>;
 
-  constructor(conditions?: Condition | Condition[], options: FilterOptions<Type> = {}) {
-    this.options = options;
-    this.target = options.target || [];
-    this.defaultMerge = (options.mergeAs || 'and') === 'and' ? and : or;
-
-    if (conditions) {
-      if (isArray(conditions)) {
-        if (conditions.length !== 0) {
-          this.condition = this.defaultMerge(...conditions);
-        }
-      } else {
-        this.condition = ConditionParser.parse(conditions);
+  constructor(conditions: Condition | Condition[], options: FilterOptions = {}) {
+    if (isArray(conditions)) {
+      if (conditions.length !== 0) {
+        this.conditionStack = ConditionParser.parse(conditions);
       }
+    } else {
+      this.conditionStack = [ConditionParser.parse(conditions)];
     }
+
+    this.options = {
+      addTo: options.addTo || 'latest',
+    };
   }
 
-  public and = (...conditions: Condition[]) => (
-    new Filter(this.mergeConditions(and, conditions), this.options)
-  );
+  public filter = <Type extends CheckableValue>(target: Type[]) => {
+    const { conditionStack } = this;
+    const condition = conditionStack.length === 1 ? conditionStack[0] : or(...conditionStack);
 
-  public or = (...conditions: Condition[]) => (
-    new Filter(this.mergeConditions(or, conditions), this.options)
-  );
-
-  public filter = (target?: Type[]) => {
-    const { condition } = this;
-    const filterTarget = target || this.target;
-
-    return condition ? filterTarget.filter(condition.check) : filterTarget;
+    return conditionStack.length !== 0 ? target.filter(condition.check) : target;
   };
 
-  private mergeConditions = (mergeFunc: typeof and | typeof or, conditions: Condition[]) => {
-    const { condition } = this;
-    let result;
+  public and = (...conditions: Condition[]) => {
+    const { conditionStack, options } = this;
+    const parsedConditions = ConditionParser.parse(conditions);
 
-    if (condition) {
-      if (conditions.length !== 0) {
-        result = mergeFunc(condition, this.defaultMerge(...conditions));
-      } else {
-        result = condition;
-      }
-    } else if (conditions.length !== 0) {
-      result = this.defaultMerge(...conditions);
-    }
+    const stack = [...conditionStack];
+    const latestCondition = stack.pop();
+    const filter = new Filter([], options);
 
-    return result;
+    stack.push(latestCondition ? and(latestCondition, ...parsedConditions) : and(...parsedConditions));
+    filter.conditionStack = stack;
+
+    return filter;
+  };
+
+  public or = (...conditions: Condition[]) => {
+    const { conditionStack, options } = this;
+    const stack = [...conditionStack];
+    const filter = new Filter([], options);
+
+    stack.push(...ConditionParser.parse(conditions));
+    filter.conditionStack = options.addTo === 'all' ? [or(...stack)] : stack;
+
+    return filter;
   };
 }

@@ -1,4 +1,3 @@
-export interface FilterOptions<Type> {
-  mergeAs?: 'or' | 'and',
-  target?: Type[],
+export interface FilterOptions {
+  addTo?: 'all' | 'latest',
 }

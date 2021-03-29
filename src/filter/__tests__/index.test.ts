@@ -4,7 +4,7 @@ import Filter from 'filter';
 import * as fixtures from './lib/fixtures';
 
 describe('The Filter tests', () => {
-  let filter: Filter<any>;
+  let filter: Filter;
 
   describe('should be compatible with all condition kinds', () => {
     let fixture: any;
