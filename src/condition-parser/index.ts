@@ -1,8 +1,8 @@
 import { isArray } from 'lib/type-guards';
 
-import { ParseError } from '../errors';
-import { Condition, ICondition, PlainCondition, SimpleConditionKey, StringCondition } from '../types';
-import { isICondition, isPlainCondition, isSimpleConditionKey } from '../lib/type-guards';
+import { ParseError } from 'conditions/errors';
+import { Condition, ICondition, PlainCondition, SimpleConditionKey, StringCondition } from 'conditions/types';
+import { isICondition, isPlainCondition, isSimpleConditionKey } from 'conditions/lib/type-guards';
 
 import { getSimpleConditionClassByKey } from './lib/utils';
 

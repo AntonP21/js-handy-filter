@@ -1,7 +1,7 @@
-import { Equal, Greater, GreaterOrEqual, Less, LessOrEqual, NotEqual } from '../../SimpleConditions';
-import { ISimpleConditionConstructor } from '../../SimpleConditions/types';
-import { TypeError } from '../../errors';
-import { SimpleConditionKey } from '../../types';
+import { Equal, Greater, GreaterOrEqual, Less, LessOrEqual, NotEqual } from 'conditions/SimpleConditions';
+import { ISimpleConditionConstructor } from 'conditions/SimpleConditions/types';
+import { TypeError } from 'conditions/errors';
+import { SimpleConditionKey } from 'conditions/types';
 
 /**
  * The function for getting a SimpleCondition class by a key.

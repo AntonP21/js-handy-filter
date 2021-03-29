@@ -1,4 +1,4 @@
-import ConditionParser from '../../ConditionParser';
+import ConditionParser from 'condition-parser';
 import { CheckableValue, Condition, ICondition } from '../../types';
 
 /**

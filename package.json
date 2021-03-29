@@ -1,10 +1,24 @@
 {
-  "name": "js-handy-filter",
-  "version": "1.0.0",
-  "main": "index.ts",
+  "name": "handy-filter",
+  "version": "0.1.0",
+  "author": "Tohman21",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
   "license": "MIT",
+  "homepage": "https://github.com/Tohman21/js-handy-filter",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tohman21/js-handy-filter"
+  },
+  "keywords": [
+    "js",
+    "handy",
+    "filter"
+  ],
   "scripts": {
-    "build": "webpack build",
+    "prepublish": "yarn build",
+    "build": "tsc",
+    "postpublish": "rm -rf ./build",
     "lint": "eslint --no-error-on-unmatched-pattern --quiet --ext .js --ext .ts src/*",
     "start": "webpack watch",
     "test": "jest --watchAll"

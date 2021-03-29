@@ -1,4 +1,5 @@
-import { ConditionParser, and, or } from 'conditions';
+import ConditionParser from 'condition-parser';
+import { and, or } from 'conditions';
 import { CheckableValue, Condition, ICondition } from 'conditions/types';
 import { isArray } from 'lib/type-guards';
 
