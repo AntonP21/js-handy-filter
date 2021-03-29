@@ -1,12 +1,16 @@
 import LogicalCondition from './LogicalCondition';
 
-import { CheckableValue } from '../../types';
+import { CheckableValue, ICondition } from '../../types';
 
 /**
- * The class for "AND" condition.
+ * The class for the "AND" condition.
  */
 export default class And extends LogicalCondition {
-  check = (value: CheckableValue): boolean => this.conditions.every((condition) => (
+  protected optimise = (conditions: ICondition[]) => conditions.filter((condition) => (
+    !condition.isAlwaysTrue
+  ));
+
+  protected validate = (value: CheckableValue): boolean => this.conditions.every((condition) => (
     condition.check(value)
   ));
 }

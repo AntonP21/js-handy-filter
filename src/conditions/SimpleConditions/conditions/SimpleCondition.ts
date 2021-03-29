@@ -9,6 +9,7 @@ import { getValue } from '../../lib/utils';
 export default abstract class SimpleCondition implements ICondition {
   readonly field?: string;
   readonly value: SimpleValue;
+  readonly isAlwaysTrue: boolean;
 
   /**
    * The presence of the "field" parameter means
@@ -26,11 +27,15 @@ export default abstract class SimpleCondition implements ICondition {
     } else {
       this.value = field;
     }
+
+    this.isAlwaysTrue = this.value === '__any__';
   }
 
-  protected abstract validate(value: SimpleValue): boolean;
-
   check = (value: CheckableValue) => {
+    if (this.isAlwaysTrue) {
+      return true;
+    }
+
     if (this.field) {
       if (isAnyObject(value)) {
         return this.validate(getValue(value, this.field));
@@ -45,4 +50,12 @@ export default abstract class SimpleCondition implements ICondition {
 
     throw new TypeError(`Type of ${value} must be SimpleValue`);
   };
+
+  /**
+   * The method for validating a value by condition.
+   *
+   * @param value - Value to validate;
+   * @protected
+   */
+  protected abstract validate(value: SimpleValue): boolean;
 }

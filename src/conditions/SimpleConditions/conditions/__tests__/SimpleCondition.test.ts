@@ -70,4 +70,18 @@ describe('SimpleCondition tests', () => {
       expect(validateSpy.getCall(0).args).toStrictEqual([someNumValue]);
     });
   });
+
+  describe('Tests with "__any__"', () => {
+    it('should always return true when a limit is "__any__"', () => {
+      const testInstance = new TestClass('__any__');
+
+      expect(testInstance.check(someNumValue)).toBeTruthy();
+    });
+
+    it('should have the isAlwaysTrue property equal to true when a limit is "__any__"', () => {
+      const testInstance = new TestClass('__any__');
+
+      expect(testInstance.isAlwaysTrue).toBeTruthy();
+    });
+  });
 });

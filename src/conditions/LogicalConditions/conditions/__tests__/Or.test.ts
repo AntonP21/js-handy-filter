@@ -17,6 +17,7 @@ describe('"Or" condition tests', () => {
         and(['numField__gt', 9], ['obj.numField__gt', 200]),
         ['obj.numField__gte', 100],
       ],
+      [{ numField: 20 }, ['numField__gt', 30], ['numField__lte', 5], ['numField__eq', '__any__']],
     ])('#%# should return true when at least one condition is true', (checkableValue, ...conditions) => {
       expect(or(...conditions as any).check(checkableValue as any)).toBeTruthy();
     });
