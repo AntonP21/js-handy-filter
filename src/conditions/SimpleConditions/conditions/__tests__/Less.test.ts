@@ -31,4 +31,15 @@ describe('Less tests', () => {
 
     expect(() => testInstance.check(someValue)).toThrow(TypeError);
   });
+
+  it('should throw TypeError when expected a SimpleValue but undefined is passed', () => {
+    expect(() => testInstance.check(undefined)).toThrow(TypeError);
+  });
+
+  it('should throw TypeError when undefined is passed as a limit', () => {
+    const someValue = 'some string';
+    testInstance = lt(undefined);
+
+    expect(() => testInstance.check(someValue)).toThrow(TypeError);
+  });
 });

@@ -57,3 +57,12 @@ export const isSimpleConditionKey = (value: any): value is SimpleConditionKey =>
 export const isICondition = (value: any): value is ICondition => (
   typeof value === 'object' && !isNull(value) && hasProperty(value, 'check')
 );
+
+/**
+ * The function for checking is a value undefined.
+ *
+ * @param value - The value to check;
+ */
+export const isUndefined = (value: any): value is undefined => (
+  typeof value === 'undefined'
+);

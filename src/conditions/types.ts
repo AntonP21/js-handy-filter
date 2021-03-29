@@ -1,4 +1,4 @@
-export type SimpleValue = bigint | boolean | null | number | string | '__any__';
+export type SimpleValue = bigint | boolean | null | number | string | undefined | '__any__';
 
 export type CheckableValue = SimpleValue | AnyObject;
 

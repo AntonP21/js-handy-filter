@@ -28,4 +28,23 @@ describe('Equal tests', () => {
   it('should return false when a passed value is null but a limit is not', () => {
     expect(testInstance.check(null)).toBeFalsy();
   });
+
+  it('should return false when a limit is null but a passed value is not', () => {
+    testInstance = eq(null);
+    expect(testInstance.check('not null')).toBeFalsy();
+  });
+
+  it('should return true when a passed value and a limit is undefined', () => {
+    testInstance = eq(undefined);
+    expect(testInstance.check(undefined)).toBeTruthy();
+  });
+
+  it('should return false when a passed value is undefined but a limit is not', () => {
+    expect(testInstance.check(undefined)).toBeFalsy();
+  });
+
+  it('should return false when a limit is undefined but a passed value is not', () => {
+    testInstance = eq(undefined);
+    expect(testInstance.check('not undefined')).toBeFalsy();
+  });
 });
