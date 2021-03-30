@@ -1,4 +1,4 @@
-import { SimpleConditionConstructor } from '../types';
+import { ConditionConstructor, SimpleValue } from '../../types';
 
 import Equal from '../conditions/Equal';
 import Greater from '../conditions/Greater';
@@ -6,11 +6,14 @@ import GreaterOrEqual from '../conditions/GreaterOrEqual';
 import Less from '../conditions/Less';
 import LessOrEqual from '../conditions/LessOrEqual';
 import NotEqual from '../conditions/NotEqual';
+import SimpleCondition from '../conditions/SimpleCondition';
+
+type Values = ConstructorParameters<ConditionConstructor<SimpleCondition, SimpleValue>>;
 
 /**
  * The alias for "equal" condition.
  */
-export const eq = (...values: ConstructorParameters<SimpleConditionConstructor>) => (
+export const eq = (...values: Values) => (
   // There is the TypeScript bug. See - https://github.com/microsoft/TypeScript/issues/28010
   // @ts-ignore
   new Equal(...values)
@@ -19,7 +22,7 @@ export const eq = (...values: ConstructorParameters<SimpleConditionConstructor>)
 /**
  * The alias for "greater than" condition.
  */
-export const gt = (...values: ConstructorParameters<SimpleConditionConstructor>) => (
+export const gt = (...values: Values) => (
   // There is the TypeScript bug. See - https://github.com/microsoft/TypeScript/issues/28010
   // @ts-ignore
   new Greater(...values)
@@ -28,7 +31,7 @@ export const gt = (...values: ConstructorParameters<SimpleConditionConstructor>)
 /**
  * The alias for "greater than or equal" condition.
  */
-export const gte = (...values: ConstructorParameters<SimpleConditionConstructor>) => (
+export const gte = (...values: Values) => (
   // There is the TypeScript bug. See - https://github.com/microsoft/TypeScript/issues/28010
   // @ts-ignore
   new GreaterOrEqual(...values)
@@ -37,7 +40,7 @@ export const gte = (...values: ConstructorParameters<SimpleConditionConstructor>
 /**
  * The alias for "less than" condition.
  */
-export const lt = (...values: ConstructorParameters<SimpleConditionConstructor>) => (
+export const lt = (...values: Values) => (
   // There is the TypeScript bug. See - https://github.com/microsoft/TypeScript/issues/28010
   // @ts-ignore
   new Less(...values)
@@ -46,7 +49,7 @@ export const lt = (...values: ConstructorParameters<SimpleConditionConstructor>)
 /**
  * The alias for "less than or equal" condition.
  */
-export const lte = (...values: ConstructorParameters<SimpleConditionConstructor>) => (
+export const lte = (...values: Values) => (
   // There is the TypeScript bug. See - https://github.com/microsoft/TypeScript/issues/28010
   // @ts-ignore
   new LessOrEqual(...values)
@@ -55,7 +58,7 @@ export const lte = (...values: ConstructorParameters<SimpleConditionConstructor>
 /**
  * The alias for "not equal" condition.
  */
-export const ne = (...values: ConstructorParameters<SimpleConditionConstructor>) => (
+export const ne = (...values: Values) => (
   // There is the TypeScript bug. See - https://github.com/microsoft/TypeScript/issues/28010
   // @ts-ignore
   new NotEqual(...values)

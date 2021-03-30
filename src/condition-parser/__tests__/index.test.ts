@@ -1,54 +1,20 @@
-import { Equal, Greater, GreaterOrEqual, gt, gte, eq, lt } from 'conditions/SimpleConditions';
-import { And, Or, and, or } from 'conditions/LogicalConditions';
 import { isICondition } from 'conditions/lib/type-guards';
-import { Condition } from 'conditions/types';
 import { ParseError } from 'condition-parser/errors';
 
 import ConditionParser from '../index';
+import * as fixtures from './lib/fixtures';
 
 describe('ConditionParser tests', () => {
-  let conditions: Condition[];
-
-  beforeEach(() => {
-    conditions = [
-      ['prop1.prop2__gt', 10],
-      gt('prop2.prop1', 9),
-      gte('prop1.prop3', 1),
-      gte('prop3.prop1', 2),
-      ['prop2.prop2__gte', 3],
-      ['gte', 5],
-    ];
-  });
-
   it('should return an array of ICondition objects when array of Condition is passed', () => {
-    expect(ConditionParser.parse(conditions).every(isICondition)).toBeTruthy();
+    const fixture = fixtures.ALL_CONDITIONS.map((condition) => condition[0]);
+
+    expect(ConditionParser.parse(fixture).every(isICondition)).toBeTruthy();
   });
 
-  it.each([
-    [Greater, ['prop1.prop2__gt', 10]],
-    [Greater, ['gt', 10]],
-    [GreaterOrEqual, ['prop1.prop2__gte', 10]],
-    [GreaterOrEqual, ['gte', 10]],
-    [GreaterOrEqual, ['gte', 10]],
-    [Equal, eq(10)],
-    [And, and(eq(10), lt(100))],
-    [Or, or(eq(10), lt(100))],
-  ])('should return a correct class when one condition is passed', (expected, condition) => {
+  it.each(
+    fixtures.ALL_CONDITIONS_WITH_TYPES,
+  )('should return a correct instance when one condition is passed', (expected, condition) => {
     expect(ConditionParser.parse(condition as any)).toBeInstanceOf(expected);
-  });
-
-  it('should return a correct result when some conditions is passed', () => {
-    const result = ConditionParser.parse([
-      ['prop1.prop2__gt', 10],
-      and(eq(10), lt(100)),
-      eq(100),
-    ]);
-
-    // .toEqual and .toStrictEqual does not work here
-    // https://github.com/facebook/jest/issues/8475
-    expect(result[0]).toBeInstanceOf(Greater);
-    expect(result[1]).toBeInstanceOf(And);
-    expect(result[2]).toBeInstanceOf(Equal);
   });
 
   it.each([

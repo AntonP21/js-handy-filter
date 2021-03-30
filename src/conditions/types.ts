@@ -17,6 +17,11 @@ export type SimpleConditionKey = 'eq' | 'gt' | 'gte' | 'lt' | 'lte' | 'ne';
 
 export type StringCondition = `${string}__${SimpleConditionKey}` | SimpleConditionKey;
 
-export type PlainCondition = [StringCondition, SimpleValue];
+export type PlainCondition<Type> = [StringCondition, Type];
 
-export type Condition = ICondition | PlainCondition;
+export type Condition = ICondition | PlainCondition<SimpleValue | RegExpValue>;
+
+export type ConditionConstructor<ClassType, ValueType> = (
+  (new(value: ValueType) => ClassType) |
+  (new(field: string, value: ValueType) => ClassType)
+);

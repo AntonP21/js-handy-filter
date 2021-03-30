@@ -76,7 +76,7 @@ describe('Type guards tests', () => {
       [true, ['some string', true]],
       [true, ['some string', false]],
       [true, ['some string', new Date()]],
-      [false, ['some string', {}]],
+      [true, ['some string', /regexp/]],
       [false, [1, 'some string']],
       [false, ['some string', 1, 'another string']],
       [false, ['some string']],

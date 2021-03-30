@@ -1,10 +1,17 @@
 import { isArray } from 'lib/type-guards';
 
-import { Condition, ICondition, PlainCondition, SimpleConditionKey, StringCondition } from 'conditions/types';
+import {
+  Condition,
+  ICondition,
+  PlainCondition,
+  SimpleConditionKey,
+  SimpleValue,
+  StringCondition,
+} from 'conditions/types';
 import { isICondition, isPlainCondition, isSimpleConditionKey } from 'conditions/lib/type-guards';
 
 import { ParseError } from './errors';
-import { getSimpleConditionClassByKey } from './lib/utils';
+import { SIMPLE_CONDITIONS_MAP } from './lib/constants';
 
 /**
  * The class for parsing conditions.
@@ -16,8 +23,8 @@ export class ConditionParser {
    * The method for parsing conditions.
    */
   parse(conditions: Condition | Condition[]): ICondition | ICondition[] {
-    if (isPlainCondition(conditions)) {
-      return this.parsePlainCondition(conditions);
+    if (isPlainCondition<SimpleValue>(conditions)) {
+      return this.parseSimplePlainCondition(conditions);
     }
 
     if (isICondition(conditions)) {
@@ -36,11 +43,9 @@ export class ConditionParser {
   /**
    * The method for parsing a plain condition.
    */
-  protected parsePlainCondition = ([stringCondition, value]: PlainCondition): ICondition => {
+  protected parseSimplePlainCondition = ([stringCondition, value]: PlainCondition<SimpleValue>): ICondition => {
     const [path, key] = this.parseStringCondition(stringCondition);
-    const SimpleConditionClass = getSimpleConditionClassByKey(key);
-
-    return new SimpleConditionClass(path, value);
+    return SIMPLE_CONDITIONS_MAP[key](path, value);
   };
 
   /**

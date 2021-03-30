@@ -45,8 +45,8 @@ export const isSimpleValue = (value: any): value is SimpleValue => (
  *
  * @param value - The value to check;
  */
-export const isPlainCondition = (value: any): value is PlainCondition => (
-  Array.isArray(value) && value.length === 2 && typeof value[0] === 'string' && isSimpleValue(value[1])
+export const isPlainCondition = <Type>(value: any): value is PlainCondition<Type> => (
+  Array.isArray(value) && value.length === 2 && typeof value[0] === 'string'
 );
 
 /**
