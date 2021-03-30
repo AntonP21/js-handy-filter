@@ -14,12 +14,21 @@ export const isNull = (value: any): value is null => (
 );
 
 /**
+ * The function for checking is a value Date.
+ *
+ * @param value - The value to check;
+ */
+export const isDate = (value: any): value is Date => (
+  value instanceof Date
+);
+
+/**
  * The function for checking is a value AnyObject.
  *
  * @param value - The value to check;
  */
 export const isAnyObject = (value: any): value is AnyObject => (
-  !isNull(value) && typeof value === 'object'
+  !isNull(value) && typeof value === 'object' && !isDate(value)
 );
 
 /**
@@ -28,7 +37,7 @@ export const isAnyObject = (value: any): value is AnyObject => (
  * @param value - The value to check;
  */
 export const isSimpleValue = (value: any): value is SimpleValue => (
-  isNull(value) || SIMPLE_TYPES.includes(typeof value)
+  isNull(value) || SIMPLE_TYPES.includes(typeof value) || isDate(value)
 );
 
 /**

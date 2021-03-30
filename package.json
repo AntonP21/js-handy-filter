@@ -6,21 +6,16 @@
   "types": "build/index.d.ts",
   "license": "MIT",
   "homepage": "https://github.com/Tohman21/js-handy-filter",
+  "keywords": ["js", "handy", "filter"],
   "repository": {
     "type": "git",
     "url": "https://github.com/Tohman21/js-handy-filter"
   },
-  "keywords": [
-    "js",
-    "handy",
-    "filter"
-  ],
   "scripts": {
-    "prepublish": "yarn build",
+    "prepublish": "rm -rf ./build && yarn build",
     "build": "tsc",
     "postpublish": "rm -rf ./build",
     "lint": "eslint --no-error-on-unmatched-pattern --quiet --ext .js --ext .ts src/*",
-    "start": "webpack watch",
     "test": "jest --watchAll"
   },
   "devDependencies": {

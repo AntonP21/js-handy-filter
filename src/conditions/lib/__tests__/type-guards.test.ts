@@ -3,6 +3,7 @@ import { gt, gte } from 'conditions';
 import { SIMPLE_CONDITION_KEYS } from '../constants';
 import {
   isAnyObject,
+  isDate,
   isICondition,
   isNull,
   isPlainCondition,
@@ -23,6 +24,7 @@ describe('Type guards tests', () => {
       [false, 'some string'],
       [false, true],
       [false, false],
+      [false, new Date()],
     ])('should return %p if %p is passed', (expected, value) => {
       expect(isAnyObject(value)).toBe(expected);
     });
@@ -39,6 +41,7 @@ describe('Type guards tests', () => {
       [false, false],
       [false, {}],
       [false, { field1: 'test', field2: { field: 123 } }],
+      [false, new Date()],
     ])('should return %p if %p is passed', (expected, value) => {
       expect(isNull(value)).toBe(expected);
     });
@@ -48,13 +51,15 @@ describe('Type guards tests', () => {
     it.each([
       [true, null],
       [true, 1],
+      [true, -100],
       [true, 1n],
       [true, 'some string'],
       [true, true],
       [true, false],
       [true, undefined],
+      [true, new Date()],
       [false, {}],
-      [false, { field1: 'test', field2: { field: 123 } }],
+      [false, { field1: 'test', field2: { field: -123 } }],
     ])('should return %p if %p is passed', (expected, value) => {
       expect(isSimpleValue(value)).toBe(expected);
     });
@@ -63,12 +68,14 @@ describe('Type guards tests', () => {
   describe('isPlainCondition tests', () => {
     it.each([
       [true, ['some string', 1]],
+      [true, ['some string', -100]],
       [true, ['some string', null]],
       [true, ['some string', undefined]],
       [true, ['some string', 'foo']],
       [true, ['some string', 100n]],
       [true, ['some string', true]],
       [true, ['some string', false]],
+      [true, ['some string', new Date()]],
       [false, ['some string', {}]],
       [false, [1, 'some string']],
       [false, ['some string', 1, 'another string']],
@@ -76,12 +83,14 @@ describe('Type guards tests', () => {
       [false, null],
       [false, undefined],
       [false, 1],
+      [false, -1],
       [false, 1n],
       [false, 'some string'],
       [false, true],
       [false, false],
       [false, {}],
       [false, { field1: 'test', field2: { field: 123 } }],
+      [false, new Date()],
     ])('should return %p if %p is passed', (expected, value) => {
       expect(isPlainCondition(value)).toBe(expected);
     });
@@ -99,6 +108,7 @@ describe('Type guards tests', () => {
       [false, false],
       [false, {}],
       [false, { field1: 'test', field2: { field: 123 } }],
+      [false, new Date()],
     ])('should return %p if %p is passed', (expected, value) => {
       expect(isSimpleConditionKey(value)).toBe(expected);
     });
@@ -117,6 +127,7 @@ describe('Type guards tests', () => {
       [false, false],
       [false, {}],
       [false, { field1: 'test', field2: { field: 123 } }],
+      [false, new Date()],
     ])('should return %p if %p is passed', (expected, value) => {
       expect(isICondition(value)).toBe(expected);
     });
@@ -133,8 +144,26 @@ describe('Type guards tests', () => {
       [false, false],
       [false, {}],
       [false, { field1: 'test', field2: { field: 123 } }],
+      [false, new Date()],
     ])('should return %p if %p is passed', (expected, value) => {
       expect(isUndefined(value)).toBe(expected);
+    });
+  });
+
+  describe('isDate tests', () => {
+    it.each([
+      [true, new Date()],
+      [false, undefined],
+      [false, null],
+      [false, 1],
+      [false, 1n],
+      [false, 'some string'],
+      [false, true],
+      [false, false],
+      [false, {}],
+      [false, { field1: 'test', field2: { field: 123 } }],
+    ])('should return %p if %p is passed', (expected, value) => {
+      expect(isDate(value)).toBe(expected);
     });
   });
 });

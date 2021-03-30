@@ -1,3 +1,4 @@
+import { isDate } from '../../lib/type-guards';
 import { SimpleValue } from '../../types';
 
 import SimpleCondition from './SimpleCondition';
@@ -12,6 +13,12 @@ export default class NotEqual extends SimpleCondition {
    * @param value - The value to validation;
    */
   protected validate(value: SimpleValue): boolean {
-    return value !== this.value;
+    const { value: limit } = this;
+
+    if (isDate(value) && isDate(limit)) {
+      return value.getTime() !== limit.getTime();
+    }
+
+    return value !== limit;
   }
 }
