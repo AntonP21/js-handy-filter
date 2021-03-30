@@ -2,17 +2,18 @@ import sinon from 'ts-sinon';
 
 import { TypeError } from 'conditions/errors';
 
-import SimpleCondition from '../SimpleCondition';
+import RangeCondition from '../RangeCondition';
 
 /**
- * The Test implementation of SimpleCondition.
+ * The Test implementation of RangeCondition.
  */
-class TestClass extends SimpleCondition {
+class TestClass extends RangeCondition {
   validate = (): boolean => true;
 }
 
-describe('SimpleCondition tests', () => {
-  const someNumValue = 1000;
+describe('RangeCondition tests', () => {
+  const someRange = [1000, 2000];
+  const someValue = 1500;
   let testObject: any;
 
   beforeEach(() => {
@@ -32,7 +33,7 @@ describe('SimpleCondition tests', () => {
 
   describe('Tests the "check" method', () => {
     it('should invoke validate with correct args when checking an object', () => {
-      const testInstance = new TestClass('obj.numField', someNumValue);
+      const testInstance = new TestClass('obj.numField', someRange);
       const validateSpy = sinon.spy(testInstance, 'validate');
 
       testInstance.check(testObject);
@@ -41,33 +42,33 @@ describe('SimpleCondition tests', () => {
     });
 
     it('should throw TypeError when expected a SimpleValue but an object is passed', () => {
-      const testInstance = new TestClass(someNumValue);
+      const testInstance = new TestClass(someRange);
 
       expect(() => testInstance.check(testObject)).toThrow(TypeError);
     });
 
     it('should invoke validate with correct args when checking a SimpleValue', () => {
-      const testInstance = new TestClass(someNumValue);
+      const testInstance = new TestClass(someRange);
       const validateSpy = sinon.spy(testInstance, 'validate');
 
-      testInstance.check(someNumValue);
+      testInstance.check(someValue);
 
-      expect(validateSpy.getCall(0).args).toStrictEqual([someNumValue]);
+      expect(validateSpy.getCall(0).args).toStrictEqual([someValue]);
     });
 
     it('should throw TypeError when expected an object but a SimpleValue is passed', () => {
-      const testInstance = new TestClass('obj.numField', someNumValue);
+      const testInstance = new TestClass('obj.numField', someRange);
 
-      expect(() => testInstance.check(someNumValue)).toThrow(TypeError);
+      expect(() => testInstance.check(someValue)).toThrow(TypeError);
     });
 
     it('should invoke validate with correct args when "field" is empty string', () => {
-      const testInstance = new TestClass('', someNumValue);
+      const testInstance = new TestClass('', someRange);
       const validateSpy = sinon.spy(testInstance, 'validate');
 
-      testInstance.check(someNumValue);
+      testInstance.check(someValue);
 
-      expect(validateSpy.getCall(0).args).toStrictEqual([someNumValue]);
+      expect(validateSpy.getCall(0).args).toStrictEqual([someValue]);
     });
   });
 

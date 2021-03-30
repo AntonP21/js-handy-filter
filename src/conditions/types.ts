@@ -1,5 +1,7 @@
 export type SimpleValue = bigint | boolean | Date | null | number | string | undefined;
 
+export type SimpleRange = SimpleValue[] | '__any__';
+
 export type CheckableValue = SimpleValue | AnyObject;
 
 export interface AnyObject {

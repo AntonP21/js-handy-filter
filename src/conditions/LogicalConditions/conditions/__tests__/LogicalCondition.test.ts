@@ -5,7 +5,7 @@ import { eq, gt } from 'conditions';
 import LogicalCondition from '../LogicalCondition';
 
 /**
- * The Test implementation of SimpleCondition.
+ * The Test implementation of LogicalCondition.
  */
 class TestClass extends LogicalCondition {
   validate = (): boolean => true;
