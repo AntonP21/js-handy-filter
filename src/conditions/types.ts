@@ -17,7 +17,11 @@ export interface ICondition {
 
 export type SimpleConditionKey = 'eq' | 'gt' | 'gte' | 'lt' | 'lte' | 'ne';
 
-export type StringCondition = `${string}__${SimpleConditionKey}` | SimpleConditionKey;
+export type RegExpConditionKey = 'ctn' | 'ictn';
+
+export type ConditionKey = SimpleConditionKey | RegExpConditionKey;
+
+export type StringCondition = `${string}__${ConditionKey}` | ConditionKey;
 
 export type PlainCondition<Type> = [StringCondition, Type];
 

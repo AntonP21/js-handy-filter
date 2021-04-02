@@ -6,66 +6,6 @@ import * as fixtures from './lib/fixtures';
 describe('The Filter tests', () => {
   let filter: Filter;
 
-  describe('should be compatible with all condition kinds', () => {
-    let fixture: any;
-
-    beforeEach(() => {
-      fixture = [1, 2, 3, 10, 5, 10, 100, 1000, 10, 500];
-    });
-
-    describe('should be compatible with all simple conditions', () => {
-      it('should be compatible with "equal"', () => {
-        filter = new Filter(eq(10));
-
-        expect(filter.filter(fixture)).toStrictEqual([10, 10, 10]);
-      });
-
-      it('should be compatible with "greater"', () => {
-        filter = new Filter(gt(10));
-
-        expect(filter.filter(fixture)).toStrictEqual([100, 1000, 500]);
-      });
-
-      it('should be compatible with "greater or equal"', () => {
-        filter = new Filter(gte(10));
-
-        expect(filter.filter(fixture)).toStrictEqual([10, 10, 100, 1000, 10, 500]);
-      });
-
-      it('should be compatible with "less or equal"', () => {
-        filter = new Filter(lt(10));
-
-        expect(filter.filter(fixture)).toStrictEqual([1, 2, 3, 5]);
-      });
-
-      it('should be compatible with "less or equal"', () => {
-        filter = new Filter(lte(10));
-
-        expect(filter.filter(fixture)).toStrictEqual([1, 2, 3, 10, 5, 10, 10]);
-      });
-
-      it('should be compatible with "less or equal"', () => {
-        filter = new Filter(ne(10));
-
-        expect(filter.filter(fixture)).toStrictEqual([1, 2, 3, 5, 100, 1000, 500]);
-      });
-    });
-
-    describe('should be compatible with all logical conditions', () => {
-      it('should be compatible with "and"', () => {
-        filter = new Filter(and(lte(100), ne(10)));
-
-        expect(filter.filter(fixture)).toStrictEqual([1, 2, 3, 5, 100]);
-      });
-
-      it('should be compatible with "or"', () => {
-        filter = new Filter(or(eq(100), gte(500)));
-
-        expect(filter.filter(fixture)).toStrictEqual([100, 1000, 500]);
-      });
-    });
-  });
-
   describe(
     "(num<1000 and (bigint>100 or null=null)) or (str='str' or (float>=221.53 and obj.num<=500)) and bool!=false",
     () => {
@@ -148,7 +88,7 @@ describe('The Filter tests', () => {
         expect(filter.filter(values)).toStrictEqual([60, 100, 30]);
       });
 
-      it('should add new condition to the latest if the option is passed', () => {
+      it('should add new condition to the latest if the "latest" option is passed', () => {
         filter = new Filter(lt(0), { addTo: 'latest' })
           .or(gt(50))
           .and(lte(100))
@@ -158,7 +98,7 @@ describe('The Filter tests', () => {
         expect(filter.filter(values)).toStrictEqual([60, 100, 30]);
       });
 
-      it('should add new condition to all previous ones if the option is passed', () => {
+      it('should add new condition to all previous ones if the "all" option is passed', () => {
         filter = new Filter(lt(0), { addTo: 'all' })
           .or(gt(50))
           .and(lte(100))

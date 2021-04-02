@@ -1,13 +1,11 @@
 import { gt, gte } from 'conditions';
 
-import { SIMPLE_CONDITION_KEYS } from '../constants';
 import {
   isAnyObject,
   isDate,
   isICondition,
   isNull,
   isPlainCondition,
-  isSimpleConditionKey,
   isSimpleValue,
   isUndefined,
 } from '../type-guards';
@@ -93,24 +91,6 @@ describe('Type guards tests', () => {
       [false, new Date()],
     ])('should return %p if %p is passed', (expected, value) => {
       expect(isPlainCondition(value)).toBe(expected);
-    });
-  });
-
-  describe('isSimpleConditionKey tests', () => {
-    it.each([
-      ...SIMPLE_CONDITION_KEYS.map<[boolean, string]>((key) => [true, key]),
-      [false, null],
-      [false, undefined],
-      [false, 1],
-      [false, 1n],
-      [false, 'some string'],
-      [false, true],
-      [false, false],
-      [false, {}],
-      [false, { field1: 'test', field2: { field: 123 } }],
-      [false, new Date()],
-    ])('should return %p if %p is passed', (expected, value) => {
-      expect(isSimpleConditionKey(value)).toBe(expected);
     });
   });
 
