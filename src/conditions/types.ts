@@ -2,6 +2,8 @@ export type SimpleValue = bigint | boolean | Date | null | number | string | und
 
 export type SimpleRange = SimpleValue[] | '__any__';
 
+export type RegExpValue = RegExp | string;
+
 export type CheckableValue = SimpleValue | AnyObject;
 
 export interface AnyObject {

@@ -11,6 +11,7 @@
   "rules": {
     "@typescript-eslint/lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
     "camelcase": "off",
+    "class-methods-use-this": "off",
     "consistent-return": "off",
     "guard-for-in": "off",
     "import/extensions": "off",
