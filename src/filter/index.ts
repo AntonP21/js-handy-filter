@@ -16,12 +16,12 @@ export default class Filter {
   private readonly options: Required<FilterOptions>;
 
   constructor(conditions: Condition | Condition[], options: FilterOptions = {}) {
-    if (isArray(conditions)) {
-      if (conditions.length !== 0) {
-        this.conditionStack = ConditionParser.parse(conditions);
-      }
+    const parsed = ConditionParser.parse(conditions as any);
+
+    if (isArray(parsed)) {
+      this.conditionStack = parsed;
     } else {
-      this.conditionStack = [ConditionParser.parse(conditions)];
+      this.conditionStack = [parsed];
     }
 
     this.options = {

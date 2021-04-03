@@ -5,6 +5,8 @@ import { getValue } from '../../lib/utils';
 
 /**
  * The base class for regexp conditions.
+ *
+ * NOTE: RegExp conditions automatically convert all values to string type.
  */
 export default abstract class RegExpCondition implements ICondition {
   readonly field?: string;
@@ -38,14 +40,14 @@ export default abstract class RegExpCondition implements ICondition {
 
     if (this.field) {
       if (isAnyObject(value)) {
-        return this.validate(getValue(value, this.field));
+        return this.validate(String(getValue(value, this.field)));
       }
 
       throw new TypeError(`Value ${value} must be an object`);
     }
 
     if (isSimpleValue(value)) {
-      return this.validate(value);
+      return this.validate(String(value));
     }
 
     throw new TypeError(`Type of ${value} must be SimpleValue`);
@@ -65,5 +67,5 @@ export default abstract class RegExpCondition implements ICondition {
    * @param value - Value to validate;
    * @protected
    */
-  protected abstract validate(value: CheckableValue): boolean;
+  protected abstract validate(value: string): boolean;
 }

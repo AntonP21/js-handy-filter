@@ -9,7 +9,7 @@ type Values = ConstructorParameters<ConditionConstructor<RegExpCondition, RegExp
 /**
  * The alias for "contain" condition.
  */
-export const ctn = (...values: Values) => (
+export const cnt = (...values: Values) => (
   // There is the TypeScript bug. See - https://github.com/microsoft/TypeScript/issues/28010
   // @ts-ignore
   new Contain(...values)
@@ -18,7 +18,7 @@ export const ctn = (...values: Values) => (
 /**
  * The alias for "ignore case contain" condition.
  */
-export const ictn = (...values: Values) => (
+export const icnt = (...values: Values) => (
   // There is the TypeScript bug. See - https://github.com/microsoft/TypeScript/issues/28010
   // @ts-ignore
   new IContain(...values)

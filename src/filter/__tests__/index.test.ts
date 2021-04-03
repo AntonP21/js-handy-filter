@@ -109,4 +109,60 @@ describe('The Filter tests', () => {
       });
     });
   });
+
+  describe('Tests for examples in README.md', () => {
+    test('Base usage', () => {
+      const example = [2, 1, 3, 10, 5, 10, 100, 1000, 200, 10, 500];
+      filter = new Filter(lt(10)).or(gte(100)).and(ne(500));
+
+      expect(filter.filter(example)).toStrictEqual([2, 1, 3, 5, 100, 1000, 200]);
+    });
+
+    test('With an array of objects', () => {
+      const example = [
+        { num: 20, nested: { str: 'bar', prop: true } },
+        { num: 100, nested: { str: 'bar', prop: false } },
+        { num: 100, nested: { str: 'foo', prop: null } },
+        { num: 10, nested: { str: 'bar', prop: true } },
+      ];
+      filter = new Filter(gt('num', 20)).and(ne('nested.prop', null)).or(eq('nested.str', 'foo'));
+
+      expect(filter.filter(example)).toStrictEqual([
+        { num: 100, nested: { str: 'bar', prop: false } },
+        { num: 100, nested: { str: 'foo', prop: null } },
+      ]);
+    });
+
+    test('Plain syntax', () => {
+      const example = [
+        { num: 20, nested: { str: 'bar', prop: true } },
+        { num: 100, nested: { str: 'bar', prop: false } },
+        { num: 100, nested: { str: 'foo', prop: null } },
+        { num: 10, nested: { str: 'bar', prop: true } },
+      ];
+      filter = new Filter(['num__gt', 20]).and(['nested.prop__ne', null]).or(['nested.str__eq', 'foo']);
+
+      expect(filter.filter(example)).toStrictEqual([
+        { num: 100, nested: { str: 'bar', prop: false } },
+        { num: 100, nested: { str: 'foo', prop: null } },
+      ]);
+    });
+
+    test('Independent use', () => {
+      const user = {
+        active: true,
+        isAdmin: false,
+        permissions: {
+          canWrite: true,
+          canRead: true,
+        },
+      };
+
+      const isActive = eq('active', true);
+      const isAdmin = eq('isAdmin', true);
+      const canWrite = and(isActive, or(isAdmin, eq('permissions.canWrite', true)));
+
+      expect(canWrite.check(user)).toBeTruthy();
+    });
+  });
 });

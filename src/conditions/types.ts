@@ -17,7 +17,7 @@ export interface ICondition {
 
 export type SimpleConditionKey = 'eq' | 'gt' | 'gte' | 'lt' | 'lte' | 'ne';
 
-export type RegExpConditionKey = 'ctn' | 'ictn';
+export type RegExpConditionKey = 'cnt' | 'icnt';
 
 export type ConditionKey = SimpleConditionKey | RegExpConditionKey;
 

@@ -38,7 +38,7 @@ describe('RegExpCondition tests', () => {
 
       testInstance.check(testObject);
 
-      expect(validateSpy.getCall(0).args).toStrictEqual([testObject.obj.numField]);
+      expect(validateSpy.getCall(0).args).toStrictEqual([String(testObject.obj.numField)]);
     });
 
     it('should throw TypeError when expected a SimpleValue but an object is passed', () => {
@@ -53,7 +53,7 @@ describe('RegExpCondition tests', () => {
 
       testInstance.check(someValue);
 
-      expect(validateSpy.getCall(0).args).toStrictEqual([someValue]);
+      expect(validateSpy.getCall(0).args).toStrictEqual([String(someValue)]);
     });
 
     it('should throw TypeError when expected an object but a SimpleValue is passed', () => {
@@ -68,7 +68,7 @@ describe('RegExpCondition tests', () => {
 
       testInstance.check(someValue);
 
-      expect(validateSpy.getCall(0).args).toStrictEqual([someValue]);
+      expect(validateSpy.getCall(0).args).toStrictEqual([String(someValue)]);
     });
   });
 

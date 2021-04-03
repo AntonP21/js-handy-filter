@@ -1,12 +1,7 @@
-import { SimpleValue } from '../../types';
-
 import RegExpCondition from './RegExpCondition';
 
 /**
  * The class for the condition "contain".
- *
- * NOTE: The "Contain" condition class automatically converts
- *  the checkable value to a string.
  */
 export default class Contain extends RegExpCondition {
   /**
@@ -14,7 +9,7 @@ export default class Contain extends RegExpCondition {
    *
    * @param value - The value to validation;
    */
-  protected validate(value: SimpleValue): boolean {
-    return this.re.test(String(value));
+  protected validate(value: string): boolean {
+    return this.re.test(value);
   }
 }

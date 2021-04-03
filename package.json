@@ -1,12 +1,12 @@
 {
   "name": "handy-filter",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "Tohman21",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "license": "MIT",
   "homepage": "https://github.com/Tohman21/js-handy-filter",
-  "keywords": ["js", "handy", "filter"],
+  "keywords": ["javascript", "typescript", "handy", "filter"],
   "repository": {
     "type": "git",
     "url": "https://github.com/Tohman21/js-handy-filter"
