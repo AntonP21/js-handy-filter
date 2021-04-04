@@ -1,13 +1,13 @@
 {
-  "exclude": ["node_modules", "jest.config.js", "webpack.config.js", "build", "__tests__"],
+  "exclude": ["node_modules", "jest.config.js", "webpack.config.js", "build"],
   "compilerOptions": {
     "target": "ES2020",
     "module": "commonjs",
     "allowJs": true,
     "declaration": true,
-    "outDir": "./build",
-    "rootDir": "./",
+    "outDir": "build",
     "strict": true,
+    "removeComments": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
