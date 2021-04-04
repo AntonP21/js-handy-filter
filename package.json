@@ -1,19 +1,24 @@
 {
   "name": "handy-filter",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "author": "Tohman21",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "license": "MIT",
   "homepage": "https://github.com/Tohman21/js-handy-filter",
-  "keywords": ["javascript", "typescript", "handy", "filter"],
+  "keywords": [
+    "javascript",
+    "typescript",
+    "handy",
+    "filter"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/Tohman21/js-handy-filter"
   },
   "scripts": {
-    "prepublish": "rm -rf ./build && yarn build",
-    "build": "tsc",
+    "prepublishOnly": "yarn lint && yarn run jest --ci && yarn build",
+    "build": "rm -rf ./build && webpack build",
     "postpublish": "rm -rf ./build",
     "lint": "eslint --no-error-on-unmatched-pattern --quiet --ext .js --ext .ts src/*",
     "test": "jest --watchAll"
@@ -21,6 +26,7 @@
   "devDependencies": {
     "@types/jest": "^26.0.21",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
+    "@zerollup/ts-transform-paths": "^1.7.18",
     "eslint": "^7.22.0",
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-plugin-import": "^2.22.1",
