@@ -16,12 +16,12 @@ export class ConditionParser {
    * The method for parsing conditions.
    */
   parse(conditions: Condition | Condition[]): ICondition | ICondition[] {
-    if (isPlainCondition(conditions)) {
-      return this.parsePlainCondition(conditions as PlainCondition<SimpleValue>);
-    }
-
     if (isICondition(conditions)) {
       return conditions;
+    }
+
+    if (isPlainCondition(conditions)) {
+      return this.parsePlainCondition(conditions as PlainCondition<SimpleValue>);
     }
 
     if (isArray(conditions)) {

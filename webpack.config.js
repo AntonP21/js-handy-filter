@@ -34,6 +34,7 @@ module.exports = {
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'build'),
+    library: { type: 'commonjs2' }
   },
 
   watchOptions: {
