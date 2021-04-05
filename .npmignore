@@ -8,4 +8,5 @@ index.ts
 .idea
 webpack.config.js
 
+!build/src
 !src/**/*.d.ts
