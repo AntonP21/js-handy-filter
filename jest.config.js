@@ -10,5 +10,5 @@ module.exports = {
     '^filter$': '<rootDir>/src/filter/index.ts',
     '^lib/(.*)': '<rootDir>/src/lib/$1',
   },
-  modulePathIgnorePatterns: ['build/', 'devBuild/', '<rootDir>/src/.*/?__tests__/.*/?lib/'],
+  modulePathIgnorePatterns: ['build/', '<rootDir>/src/.*/?__tests__/.*/?lib/'],
 };
