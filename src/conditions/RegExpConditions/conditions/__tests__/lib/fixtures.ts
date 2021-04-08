@@ -46,3 +46,8 @@ export const SIMPLE_VALUES: [any][] = [
   [null],
   [undefined],
 ];
+
+export const IGNORE_SYMBOLS: any[][] = [
+  [true, false, '.b*a+r$', /.b*a+r$/, '.b*a+r$'],
+  [false, true, '.b*a+r$', /.b*a+r$/, 'bbbaaar'],
+];

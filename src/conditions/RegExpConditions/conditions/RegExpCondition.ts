@@ -1,5 +1,6 @@
 import { TypeError } from '../../errors';
 import { CheckableValue, ICondition, RegExpValue } from '../../types';
+import { ANY } from '../../lib/constants';
 import { isAnyObject, isSimpleValue } from '../../lib/type-guards';
 import { getValue } from '../../lib/utils';
 
@@ -10,7 +11,7 @@ import { getValue } from '../../lib/utils';
  */
 export default abstract class RegExpCondition implements ICondition {
   readonly field?: string;
-  readonly re: RegExp;
+  readonly value: RegExpValue;
   readonly isAlwaysTrue: boolean;
   readonly isAlwaysFalse: boolean = false;
 
@@ -20,18 +21,21 @@ export default abstract class RegExpCondition implements ICondition {
    */
   constructor(value: RegExpValue);
   constructor(field: string, value: RegExpValue);
-  constructor(field: string | RegExpValue, value?: RegExpValue) {
+  constructor(field: RegExpValue, value?: RegExpValue) {
+    let parsed;
+
     if (value !== undefined) {
       if (field !== '') {
         this.field = field as string;
       }
 
-      this.re = new RegExp(value, this.flags);
+      parsed = this.parseValue(value);
     } else {
-      this.re = new RegExp(field, this.flags);
+      parsed = this.parseValue(field);
     }
 
-    this.isAlwaysTrue = this.re.source === '__any__';
+    this.value = parsed[0];
+    this.isAlwaysTrue = parsed[1];
   }
 
   check = (value: CheckableValue) => {
@@ -58,8 +62,24 @@ export default abstract class RegExpCondition implements ICondition {
    * The getter for regexp flags.
    * @protected
    */
-  protected get flags(): string | undefined {
-    return undefined;
+  protected get flags(): string {
+    return '';
+  }
+
+  /**
+   * The method for parsing condition value.
+   * @protected
+   */
+  protected parseValue(value: RegExpValue): [RegExpValue, boolean] {
+    if (typeof value === 'string') {
+      return [value, value === ANY];
+    }
+
+    if (value instanceof RegExp) {
+      return [new RegExp(value, value.flags + this.flags), value.source === ANY];
+    }
+
+    throw new TypeError(`A value for RegExpCondition must be string or RegExp not ${typeof value}`);
   }
 
   /**

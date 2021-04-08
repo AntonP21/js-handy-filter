@@ -21,4 +21,13 @@ describe('Ignore case contain tests', () => {
   )('should return true for any value (%p) when a limit is "__any__"', (value) => {
     expect(icnt('__any__').check(value)).toBeTruthy();
   });
+
+  it.each(
+    fixtures.IGNORE_SYMBOLS,
+  )('should ignore regexp symbols if a string condition was passed to the constructor', (...args) => {
+    const [expectedStr, expectedRegExp, strCondition, regExpCondition, checkableValue] = args;
+
+    expect(icnt(strCondition).check(checkableValue)).toBe(expectedStr);
+    expect(icnt(regExpCondition).check(checkableValue)).toBe(expectedRegExp);
+  });
 });

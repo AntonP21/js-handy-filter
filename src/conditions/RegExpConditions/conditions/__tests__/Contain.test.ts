@@ -21,4 +21,13 @@ describe('Contain tests', () => {
   )('should return true for any value (%p) when a limit is "__any__"', (value) => {
     expect(cnt('__any__').check(value)).toBeTruthy();
   });
+
+  it.each(
+    fixtures.IGNORE_SYMBOLS,
+  )('should ignore regexp symbols if a string condition was passed to the constructor', (...args) => {
+    const [expectedStr, expectedRegExp, strCondition, regExpCondition, checkableValue] = args;
+
+    expect(cnt(strCondition).check(checkableValue)).toBe(expectedStr);
+    expect(cnt(regExpCondition).check(checkableValue)).toBe(expectedRegExp);
+  });
 });

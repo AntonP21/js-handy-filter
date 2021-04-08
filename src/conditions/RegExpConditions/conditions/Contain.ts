@@ -10,6 +10,12 @@ export default class Contain extends RegExpCondition {
    * @param value - The value to validation;
    */
   protected validate(value: string): boolean {
-    return this.re.test(value);
+    const condition = this.value;
+
+    if (typeof condition === 'string') {
+      return value.includes(condition);
+    }
+
+    return condition.test(value);
   }
 }

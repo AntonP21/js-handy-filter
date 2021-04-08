@@ -1,5 +1,6 @@
 import { TypeError } from '../../errors';
 import { CheckableValue, ICondition, SimpleRange, SimpleValue } from '../../types';
+import { ANY } from '../../lib/constants';
 import { isAnyObject, isSimpleValue } from '../../lib/type-guards';
 import { getValue } from '../../lib/utils';
 
@@ -29,7 +30,7 @@ export default abstract class RangeCondition implements ICondition {
       this.value = field as SimpleValue[];
     }
 
-    this.isAlwaysTrue = this.value === '__any__';
+    this.isAlwaysTrue = this.value === ANY;
   }
 
   check = (value: CheckableValue) => {
