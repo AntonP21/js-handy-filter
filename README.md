@@ -38,10 +38,10 @@ yarn:
 <a name="base-usage"></a>
 ### Base usage
 ```javascript
-import Filter, { gte, lt, ne } from 'handy-filter';
+import Filter, { gte, lt, not, eq } from 'handy-filter';
 
 // num < 10 or num >= 100 and num !== 500
-const filter = new Filter(lt(10)).or(gte(100)).and(ne(500));
+const filter = new Filter(lt(10)).or(gte(100)).and(not(eq(500)));
 const example = [2, 1, 3, 10, 5, 10, 100, 1000, 200, 10, 500];
 
 filter.filter(example); // result is [2, 1, 3, 5, 100, 1000, 200]
@@ -56,7 +56,7 @@ You can use the Filter with an array of objects.
 
 You can filter objects by properties of any deep.
 ```javascript
-import Filter, { eq, gt, ne } from 'handy-filter';
+import Filter, { eq, gt, not, eq } from 'handy-filter';
 
 const example = [
   { num: 20, nested: { str: 'bar', prop: true }},
@@ -66,7 +66,7 @@ const example = [
 ];
 
 // obj.num > 20 and obj.nested.prop !== null or obj.nested.str === 'foo'
-const filter = new Filter(gt('num', 20)).and(ne('nested.prop', null)).or(eq('nested.str', 'foo'));
+const filter = new Filter(gt('num', 20)).and(not(eq('nested.prop', null))).or(eq('nested.str', 'foo'));
 
 filter.filter(example);
 // result is [
@@ -89,7 +89,7 @@ const example = [
 ];
 
 // obj.num > 20 and obj.nested.prop !== null or obj.nested.str === 'foo'
-const filter = new Filter(['num__gt', 20]).and(['nested.prop__ne', null]).or(['nested.str__eq', 'foo']);
+const filter = new Filter(['num__gt', 20]).and(['nested.prop__eq', false]).or(['nested.str__eq', 'foo']);
 
 filter.filter(example);
 // result is [
@@ -102,9 +102,9 @@ See more about [Conditions](#conditions).
 <a name="create-filter-in-runtime"></a>
 ### Create filter in runtime
 ```javascript
-import Filter, { ne, lt, gt, eq } from 'handy-filter';
+import Filter, { lt, lte, gt, eq } from 'handy-filter';
 
-let filter1 = new Filter(ne(20));
+let filter1 = new Filter(lte((20)));
 
 if (Math.random() < 0.5) {
   filter = filter.and(gt(10));
@@ -114,10 +114,10 @@ if (Math.random() < 0.5) {
 ```
 > **NOTE** that "and" and "or" methods create a **new instance** of the Filter:
 ```javascript
-import Filter, { ne, gt } from 'handy-filter';
+import Filter, { lte, gt } from 'handy-filter';
 
-const filter1 = new Filter(ne(20));
-// the filter1 still contain the "ne(20)" condition, but filter2 contain "ne(20) and gt(10)"
+const filter1 = new Filter(lte(20));
+// the filter1 still contain the "lte(20)" condition, but filter2 contain "lte(20) and gt(10)"
 const filter2 = filter1.and(gt(10));
 ```
 
@@ -127,13 +127,13 @@ To make a condition always true, you can use the \_\_any\_\_. This can be useful
 a structure of the filter, but want to change his values. Or, for example, you want to disable a part of the 
 filter condition.
 ```javascript
-import Filter, { ne, lt, gt, gte } from 'handy-filter';
+import Filter, { not, eq, lt, gt, gte } from 'handy-filter';
 
 // This is equivalent to "value !== 20 and value < 100"
-new Filter(ne(20)).and(gt('__any__')).and(lt(100)).and(ne('__any__'));
+new Filter(not(eq(20))).and(gt('__any__')).and(lt(100)).and(not(eq('__any__')));
 
 // This will always be true
-new Filter(ne(20)).or(lt(100)).or(gte('__any__'));
+new Filter(not(eq(20))).or(lt(100)).or(gte('__any__'));
 ```
 The Filter **automatically optimising** conditions containing **\_\_any\_\_** values, so you **don't need to worry** 
 about performance.
@@ -151,7 +151,6 @@ Simple conditions work with all [basic types](#supported-types).
 |Greater than or equal|  gte  |Check if a value is grater than or equal to another value|
 |         Less        |  lt   |         Check if a value less than another value        |
 |  Less than or equal |  lte  |   Check if a value less than or equal to another value  |
-|      Not equal      |  ne   |      Check if a value is not equal to another value     |
 
 <a name="logical-conditions"></a>
 ### Logical conditions
@@ -164,6 +163,7 @@ Can check values of any [base type](#supported-types), but only conditions can b
 |:--------------------|:-----:|:-------------------------------------------------------:|
 |         And         |  and  |     Combine other conditions through logical "and"      |
 |         Or          |  or   |     Combine other conditions through logical "or"       |
+|         Not         |  not  |         Takes truth to falsity and vice versa           |
 
 <a name="regexp-conditions"></a>
 ### RegExp conditions
@@ -223,14 +223,14 @@ Default: 'latest'.
 
 This option changes how the filter add new conditions using "and" and "or" methods:
 ```javascript
-import Filter, { and, or, eq } from 'handy-filter';
+import Filter, { and, not, or, eq, gt, lte } from 'handy-filter';
 
 const values = [4, 1, 60, 3, 5, 10, 50, 20, 100, 30, 1000];
 
 // This is equivalent to "value < 0 or value > 50 and value <= 100 or value != 60 and value === 30"
-const defaultFilter = new Filter(lt(0)).or(gt(50)).and(lte(100)).or(ne(60)).and(eq(30));
+const defaultFilter = new Filter(lt(0)).or(gt(50)).and(lte(100)).or(not(eq(60))).and(eq(30));
 // This is equivalent to "(((value < 0 or value > 50) and value <= 100) or value != 60) and value === 30"
-const filterWithOption = new Filter(lt(0), { addTo: 'all' }).or(gt(50)).and(lte(100)).or(ne(60)).and(eq(30));
+const filterWithOption = new Filter(lt(0), { addTo: 'all' }).or(gt(50)).and(lte(100)).or(not(eq(60))).and(eq(30));
 
 defaultFilter.filter(values); // result is [60, 100, 30]
 filterWithOption.filter(values); // result is [30]

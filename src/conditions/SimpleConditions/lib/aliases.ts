@@ -5,7 +5,6 @@ import Greater from '../conditions/Greater';
 import GreaterOrEqual from '../conditions/GreaterOrEqual';
 import Less from '../conditions/Less';
 import LessOrEqual from '../conditions/LessOrEqual';
-import NotEqual from '../conditions/NotEqual';
 import SimpleCondition from '../conditions/SimpleCondition';
 
 type Values = ConstructorParameters<ConditionConstructor<SimpleCondition, SimpleValue>>;
@@ -53,13 +52,4 @@ export const lte = (...values: Values) => (
   // There is the TypeScript bug. See - https://github.com/microsoft/TypeScript/issues/28010
   // @ts-ignore
   new LessOrEqual(...values)
-);
-
-/**
- * The alias for "not equal" condition.
- */
-export const ne = (...values: Values) => (
-  // There is the TypeScript bug. See - https://github.com/microsoft/TypeScript/issues/28010
-  // @ts-ignore
-  new NotEqual(...values)
 );

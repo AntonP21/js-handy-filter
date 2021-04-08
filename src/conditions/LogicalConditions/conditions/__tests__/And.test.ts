@@ -1,4 +1,4 @@
-import { and, or } from '../../lib/aliases';
+import { and, not, or, eq } from 'conditions';
 
 import { createFakeCondition } from './lib/fakes';
 
@@ -45,7 +45,7 @@ describe('"And" condition tests', () => {
   describe('Optimisation tests', () => {
     it.each([
       [true, ['gt', 15], createFakeCondition({ isAlwaysFalse: true })()],
-      [true, createFakeCondition({ isAlwaysFalse: true })(), ['ne', 50]],
+      [true, createFakeCondition({ isAlwaysFalse: true })(), not(eq(50))],
       [true, ['gt', 9], createFakeCondition({ isAlwaysFalse: true })(), ['lt', 100]],
       [false, ['gt', 9], ['lt', 100]],
     ])('#%# should set isAlwaysFalse if at least one condition is always false', (expected, ...conditions) => {

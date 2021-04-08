@@ -1,6 +1,6 @@
-import { And, Or, Equal, Greater, GreaterOrEqual, Less,
-  LessOrEqual, NotEqual, Contain, IContain,
-  and, or, eq, gt, gte, lt, lte, ne, cnt, icnt } from 'conditions';
+import { And, Not, Or, Equal, Greater, GreaterOrEqual, Less,
+  LessOrEqual, Contain, IContain,
+  and, not, or, eq, gt, gte, lt, lte, cnt, icnt } from 'conditions';
 import { Condition } from 'conditions/types';
 
 export const ALL_CONDITIONS: [Condition][] = [
@@ -12,7 +12,7 @@ export const ALL_CONDITIONS: [Condition][] = [
   [gte(10)],
   [lt(10)],
   [lte(10)],
-  [ne(10)],
+  [not(eq(10))],
   [cnt(/regexp/)],
   [icnt(/regexp/)],
   // PlainConditions
@@ -21,7 +21,6 @@ export const ALL_CONDITIONS: [Condition][] = [
   [['gte', 10]],
   [['lt', 10]],
   [['lte', 10]],
-  [['ne', 10]],
   [['cnt', /regexp/]],
   [['icnt', /regexp/]],
 ];
@@ -35,7 +34,7 @@ export const ALL_CONDITIONS_WITH_TYPES: [any, Condition][] = [
   [GreaterOrEqual, gte(10)],
   [Less, lt(10)],
   [LessOrEqual, lte(10)],
-  [NotEqual, ne(10)],
+  [Not, not(eq(10))],
   [Contain, cnt(/regexp/)],
   [IContain, icnt(/regexp/)],
   // PlainConditions
@@ -44,7 +43,6 @@ export const ALL_CONDITIONS_WITH_TYPES: [any, Condition][] = [
   [GreaterOrEqual, ['gte', 10]],
   [Less, ['lt', 10]],
   [LessOrEqual, ['lte', 10]],
-  [NotEqual, ['ne', 10]],
   [Contain, ['cnt', /regexp/]],
   [IContain, ['icnt', /regexp/]],
 ];

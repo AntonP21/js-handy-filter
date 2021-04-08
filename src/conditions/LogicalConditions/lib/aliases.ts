@@ -1,17 +1,26 @@
+import { Condition } from '../../types';
+
 import And from '../conditions/And';
+import Not from '../conditions/Not';
 import Or from '../conditions/Or';
-import { LogicalConditionConstructor } from '../types';
 
 /**
- * The alias for "and" condition.
+ * The alias for the "and" condition.
  */
-export const and = (...values: ConstructorParameters<LogicalConditionConstructor>) => (
+export const and = (...values: Condition[]) => (
   new And(...values)
 );
 
 /**
- * The alias for "or" condition.
+ * The alias for the "not" condition.
  */
-export const or = (...values: ConstructorParameters<LogicalConditionConstructor>) => (
+export const not = (value: Condition) => (
+  new Not(value)
+);
+
+/**
+ * The alias for the "or" condition.
+ */
+export const or = (...values: Condition[]) => (
   new Or(...values)
 );

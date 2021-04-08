@@ -1,4 +1,4 @@
-import { and, or } from '../../lib/aliases';
+import { and, not, or, eq } from 'conditions';
 
 import { createFakeCondition } from './lib/fakes';
 
@@ -58,7 +58,7 @@ describe('"Or" condition tests', () => {
 
     it.each([
       [true, ['gt', 15], createFakeCondition({ isAlwaysTrue: true })()],
-      [true, createFakeCondition({ isAlwaysTrue: true })(), ['ne', 50]],
+      [true, createFakeCondition({ isAlwaysTrue: true })(), not(eq(50))],
       [true, ['gt', 9], createFakeCondition({ isAlwaysTrue: true })(), ['lt', 100]],
       [false, ['gt', 9], ['lt', 100]],
     ])('should set isAlwaysTrue if at least one condition is always true', (expected, ...conditions) => {

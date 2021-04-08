@@ -1,4 +1,4 @@
-import { and, or, eq, gt, gte, lt, lte, ne } from 'conditions';
+import { and, not, or, eq, gt, gte, lt, lte } from 'conditions';
 import Filter from 'filter';
 
 import * as fixtures from './lib/fixtures';
@@ -19,7 +19,7 @@ describe('The Filter tests', () => {
                   eq('str', 'str'),
                   and(gte('float', 221.53), lte('obj.num', 500)),
                 ),
-                ne('bool', false),
+                not(eq('bool', false)),
               ),
             ),
           );
@@ -49,7 +49,7 @@ describe('The Filter tests', () => {
                 eq('str', 'str'),
                 and(gte('float', 221.53), lte('obj.num', 500)),
               ),
-              ne('bool', false),
+              not(eq('bool', false)),
             ));
         });
 
@@ -82,7 +82,7 @@ describe('The Filter tests', () => {
         filter = new Filter(lt(0))
           .or(gt(50))
           .and(lte(100))
-          .or(ne(60))
+          .or(not(eq(60)))
           .and(eq(30));
 
         expect(filter.filter(values)).toStrictEqual([60, 100, 30]);
@@ -92,7 +92,7 @@ describe('The Filter tests', () => {
         filter = new Filter(lt(0), { addTo: 'latest' })
           .or(gt(50))
           .and(lte(100))
-          .or(ne(60))
+          .or(not(eq(60)))
           .and(eq(30));
 
         expect(filter.filter(values)).toStrictEqual([60, 100, 30]);
@@ -102,7 +102,7 @@ describe('The Filter tests', () => {
         filter = new Filter(lt(0), { addTo: 'all' })
           .or(gt(50))
           .and(lte(100))
-          .or(ne(60))
+          .or(not(eq(60)))
           .and(eq(30));
 
         expect(filter.filter(values)).toStrictEqual([30]);
@@ -113,7 +113,7 @@ describe('The Filter tests', () => {
   describe('Tests for examples in README.md', () => {
     test('Base usage', () => {
       const example = [2, 1, 3, 10, 5, 10, 100, 1000, 200, 10, 500];
-      filter = new Filter(lt(10)).or(gte(100)).and(ne(500));
+      filter = new Filter(lt(10)).or(gte(100)).and(not(eq(500)));
 
       expect(filter.filter(example)).toStrictEqual([2, 1, 3, 5, 100, 1000, 200]);
     });
@@ -125,7 +125,7 @@ describe('The Filter tests', () => {
         { num: 100, nested: { str: 'foo', prop: null } },
         { num: 10, nested: { str: 'bar', prop: true } },
       ];
-      filter = new Filter(gt('num', 20)).and(ne('nested.prop', null)).or(eq('nested.str', 'foo'));
+      filter = new Filter(gt('num', 20)).and(not(eq('nested.prop', null))).or(eq('nested.str', 'foo'));
 
       expect(filter.filter(example)).toStrictEqual([
         { num: 100, nested: { str: 'bar', prop: false } },
@@ -140,7 +140,7 @@ describe('The Filter tests', () => {
         { num: 100, nested: { str: 'foo', prop: null } },
         { num: 10, nested: { str: 'bar', prop: true } },
       ];
-      filter = new Filter(['num__gt', 20]).and(['nested.prop__ne', null]).or(['nested.str__eq', 'foo']);
+      filter = new Filter(['num__gt', 20]).and(['nested.prop__eq', false]).or(['nested.str__eq', 'foo']);
 
       expect(filter.filter(example)).toStrictEqual([
         { num: 100, nested: { str: 'bar', prop: false } },
