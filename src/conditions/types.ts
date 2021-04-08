@@ -13,6 +13,7 @@ export interface AnyObject {
 export interface ICondition {
   check: (value: CheckableValue) => boolean,
   readonly isAlwaysTrue: boolean;
+  readonly isAlwaysFalse: boolean;
 }
 
 export type SimpleConditionKey = 'eq' | 'gt' | 'gte' | 'lt' | 'lte' | 'ne';

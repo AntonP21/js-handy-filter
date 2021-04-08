@@ -10,6 +10,7 @@ export default abstract class RangeCondition implements ICondition {
   readonly field?: string;
   readonly value: SimpleRange;
   readonly isAlwaysTrue: boolean;
+  readonly isAlwaysFalse: boolean = false;
 
   /**
    * The presence of the "field" parameter means

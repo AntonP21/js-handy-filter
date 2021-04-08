@@ -2,8 +2,10 @@
 
 
 ## Overview
-Handy Filter is a JavaScript library for handy arrays filtration. With her you can filter 
+Handy Filter is a JavaScript/TypeScript library for handy arrays filtration. With her you can filter 
 by conditions of **any complexity** in **declarative** style.
+
+If you want to work with `React` see [handy-filter-hook](https://github.com/Tohman21/handy-filter-hook)
 
 ## Installation
 npm:
@@ -46,7 +48,7 @@ filter.filter(example); // result is [2, 1, 3, 5, 100, 1000, 200]
 ```
 See more about [Conditions](#conditions).
 
-**NOTE** that you can pass to the methods any number of conditions.
+> **NOTE** that you can pass to the methods any number of conditions.
 
 <a name="with-an-array-of-objects"></a>
 ### With an array of objects
@@ -110,7 +112,7 @@ if (Math.random() < 0.5) {
   filter = filter.and(lt(30)).or(eq(100));
 }
 ```
-**NOTE** that "and" and "or" methods create a **new instance** of the Filter:
+> **NOTE** that "and" and "or" methods create a **new instance** of the Filter:
 ```javascript
 import Filter, { ne, gt } from 'handy-filter';
 
@@ -143,7 +145,7 @@ about performance.
 Simple conditions work with all [basic types](#supported-types).
 
 |        Name         | Alias |                        Purpose                          |
-|---------------------|-------|---------------------------------------------------------|
+|:--------------------|:-----:|:-------------------------------------------------------:|
 |        Equal        |  eq   |       Check if a value is equal to another value        |
 |       Greater       |  gt   |     Check if a value is greater than another value      |
 |Greater than or equal|  gte  |Check if a value is grater than or equal to another value|
@@ -153,25 +155,25 @@ Simple conditions work with all [basic types](#supported-types).
 
 <a name="logical-conditions"></a>
 ### Logical conditions
-Can check values of any [base type](#supported-types), but only conditions can be accepted as parameters:
+Can check values of any [base type](#supported-types), but only conditions can be passed as constructor parameters:
 1. [Simple conditions](#simple-conditions);
 1. [Logical conditions](#logical-conditions);
 1. [RegExp conditions](#regexp-conditions).
 
 |        Name         | Alias |                        Purpose                          |
-|---------------------|-------|---------------------------------------------------------|
+|:--------------------|:-----:|:-------------------------------------------------------:|
 |         And         |  and  |     Combine other conditions through logical "and"      |
 |         Or          |  or   |     Combine other conditions through logical "or"       |
 
 <a name="regexp-conditions"></a>
 ### RegExp conditions
 Can check values of any [base type](#supported-types), but only values of type string or RegExp can 
-be accepted as parameters.
+be passed as constructor parameters.
 
-**NOTE** that RegExp conditions automatically convert all values to string type. 
+> **NOTE** that RegExp conditions automatically convert all values to string type. 
 
 |        Name         | Alias |                        Purpose                          |
-|---------------------|-------|---------------------------------------------------------|
+|:--------------------|:-----:|:-------------------------------------------------------:|
 |       Contain       |  cnt  |         Check if a value contains another value         |
 | Ignore case contain |  icnt |         Check if a value contains another value         |
 

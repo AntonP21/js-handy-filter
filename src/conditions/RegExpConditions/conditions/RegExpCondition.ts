@@ -12,6 +12,7 @@ export default abstract class RegExpCondition implements ICondition {
   readonly field?: string;
   readonly re: RegExp;
   readonly isAlwaysTrue: boolean;
+  readonly isAlwaysFalse: boolean = false;
 
   /**
    * The presence of the "field" parameter means

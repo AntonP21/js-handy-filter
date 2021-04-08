@@ -4,6 +4,7 @@
   "author": "Tohman21",
   "main": "build/index.js",
   "types": "build/index.d.ts",
+  "description": "Handy Filter is a JavaScript library for handy arrays filtration. With her you can filter by conditions of any complexity in declarative style",
   "license": "MIT",
   "homepage": "https://github.com/Tohman21/js-handy-filter",
   "keywords": [

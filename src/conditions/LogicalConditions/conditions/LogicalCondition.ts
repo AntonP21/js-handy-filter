@@ -6,21 +6,68 @@ import { CheckableValue, Condition, ICondition } from '../../types';
  */
 export default abstract class LogicalCondition implements ICondition {
   protected conditions: ICondition[] = [];
-  readonly isAlwaysTrue: boolean = false;
+  private _isAlwaysTrue: boolean = false;
+  private _isAlwaysFalse: boolean = false;
 
   constructor(...args: Condition[]) {
     if (args.length !== 0) {
       this.conditions = this.optimise(ConditionParser.parse(args));
-    }
-
-    if (this.conditions.length === 0) {
-      this.isAlwaysTrue = true;
+    } else {
+      this._isAlwaysTrue = true;
     }
   }
 
-  check = (value: CheckableValue): boolean => (
-    this.isAlwaysTrue || this.validate(value)
-  );
+  /**
+   * The method for setting the isAlwaysTrue value.
+   */
+  protected setIsAlwaysTrue = (newValue: boolean) => {
+    if (newValue) {
+      this._isAlwaysFalse = false;
+    }
+
+    this._isAlwaysTrue = newValue;
+  };
+
+  /**
+   * The method for setting the isAlwaysTrue value.
+   */
+  protected setIsAlwaysFalse = (newValue: boolean) => {
+    if (newValue) {
+      this._isAlwaysTrue = false;
+    }
+
+    this._isAlwaysFalse = newValue;
+  };
+
+  /**
+   * Getter for the value isAlwaysTrue.
+   *
+   * NOTE: He is needed for child classes can set their own value.
+   */
+  get isAlwaysTrue() {
+    return this._isAlwaysTrue;
+  }
+
+  /**
+   * Getter for the value isAlwaysFalse.
+   *
+   * NOTE: He is needed for child classes can set their own value.
+   */
+  get isAlwaysFalse() {
+    return this._isAlwaysFalse;
+  }
+
+  check = (value: CheckableValue): boolean => {
+    if (this._isAlwaysTrue) {
+      return true;
+    }
+
+    if (this._isAlwaysFalse) {
+      return false;
+    }
+
+    return this.validate(value);
+  };
 
   /**
    * The method for optimising received conditions.
@@ -28,7 +75,9 @@ export default abstract class LogicalCondition implements ICondition {
    * @param conditions - Conditions to optimise;
    * @protected
    */
-  protected optimise = (conditions: ICondition[]) => conditions;
+  protected optimise(conditions: ICondition[]) {
+    return conditions;
+  }
 
   /**
    * The method for validating a value by condition.

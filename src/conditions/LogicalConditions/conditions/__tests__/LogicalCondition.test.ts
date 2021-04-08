@@ -1,15 +1,6 @@
 import sinon from 'ts-sinon';
 
-import { eq, gt } from 'conditions';
-
-import LogicalCondition from '../LogicalCondition';
-
-/**
- * The Test implementation of LogicalCondition.
- */
-class TestClass extends LogicalCondition {
-  validate = (): boolean => true;
-}
+import { createFakeCondition } from './lib/fakes';
 
 describe('LogicalCondition tests', () => {
   const someNumValue = 1000;
@@ -30,37 +21,45 @@ describe('LogicalCondition tests', () => {
     sinon.restore();
   });
 
-  describe('Tests the "check" method', () => {
-    it('should invoke validate with correct args when checking an object', () => {
-      const testInstance = new TestClass(eq(someNumValue));
-      const validateSpy = sinon.spy(testInstance, 'validate');
+  describe('The "check" method tests', () => {
+    let validateSpy: any;
+    let fakeCondition: any;
 
-      testInstance.check(testObject);
+    beforeEach(() => {
+      validateSpy = sinon.spy();
+      fakeCondition = createFakeCondition({ validate: validateSpy })(
+        createFakeCondition()(),
+      );
+    });
+
+    it('should invoke validate with correct args when checking an object', () => {
+      fakeCondition.check(testObject);
 
       expect(validateSpy.getCall(0).args).toStrictEqual([testObject]);
     });
 
     it('should invoke validate with correct args when checking a SimpleValue', () => {
-      const testInstance = new TestClass(gt(someNumValue));
-      const validateSpy = sinon.spy(testInstance, 'validate');
-
-      testInstance.check(22);
+      fakeCondition.check(22);
 
       expect(validateSpy.getCall(0).args).toStrictEqual([22]);
     });
   });
 
-  describe('Tests with empty conditions', () => {
-    it('should always return true if receive no one condition', () => {
-      const testInstance = new TestClass();
+  describe('isAlways* properties tests', () => {
+    it('should always return true if the isAlwaysTrue value is set to true', () => {
+      const fakeCondition = createFakeCondition({ isAlwaysTrue: true })();
 
-      expect(testInstance.check(someNumValue)).toBeTruthy();
+      expect(fakeCondition.check(someNumValue)).toBeTruthy();
     });
 
-    it('should have the isAlwaysTrue property equal to true if receive no one condition', () => {
-      const testInstance = new TestClass();
+    it('should always return false if the isAlwaysFalse value is set to true', () => {
+      const fakeCondition = createFakeCondition({ isAlwaysFalse: true })();
 
-      expect(testInstance.isAlwaysTrue).toBeTruthy();
+      expect(fakeCondition.check(someNumValue)).toBeFalsy();
+    });
+
+    it('should set isAlwaysTrue if no one condition has been passed', () => {
+      expect(createFakeCondition()().isAlwaysTrue).toBeTruthy();
     });
   });
 });

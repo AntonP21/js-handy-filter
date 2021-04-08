@@ -55,7 +55,7 @@ export const isPlainCondition = <Type = any>(value: any): value is PlainConditio
  * @param value - The value to check;
  */
 export const isICondition = (value: any): value is ICondition => (
-  typeof value === 'object' && !isNull(value) && hasProperty(value, 'check') && hasProperty(value, 'isAlwaysTrue')
+  typeof value === 'object' && !isNull(value) && hasProperty(value, 'check')
 );
 
 /**
