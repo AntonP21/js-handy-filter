@@ -1,5 +1,5 @@
 import { TypeError } from '../../errors';
-import { CheckableValue, ICondition, SimpleRange, SimpleValue } from '../../types';
+import { CheckableValue, ICondition, SimpleValue } from '../../types';
 import { ANY } from '../../lib/constants';
 import { isAnyObject, isSimpleValue } from '../../lib/type-guards';
 import { getValue } from '../../lib/utils';
@@ -9,28 +9,34 @@ import { getValue } from '../../lib/utils';
  */
 export default abstract class RangeCondition implements ICondition {
   readonly field?: string;
-  readonly value: SimpleRange;
-  readonly isAlwaysTrue: boolean;
+  readonly value: SimpleValue[] = [];
+  readonly isAlwaysTrue: boolean = false;
   readonly isAlwaysFalse: boolean = false;
 
   /**
    * The presence of the "field" parameter means
    *  that the check will be performed for Object.
    */
-  constructor(value: SimpleRange);
-  constructor(field: string, value: SimpleRange);
-  constructor(field: string | SimpleRange, value?: SimpleRange) {
+  constructor(value: SimpleValue[] | typeof ANY);
+  constructor(field: string, value: SimpleValue[] | typeof ANY);
+  constructor(field: string | SimpleValue[], value?: SimpleValue[] | typeof ANY) {
+    let rawValue;
+
     if (value !== undefined) {
       if (field !== '') {
         this.field = field as string;
       }
 
-      this.value = value;
+      rawValue = value;
     } else {
-      this.value = field as SimpleValue[];
+      rawValue = field as SimpleValue[];
     }
 
-    this.isAlwaysTrue = this.value === ANY;
+    if (rawValue === '__any__') {
+      this.isAlwaysTrue = true;
+    } else {
+      this.value = rawValue;
+    }
   }
 
   check = (value: CheckableValue) => {
@@ -59,5 +65,5 @@ export default abstract class RangeCondition implements ICondition {
    * @param value - Value to validate;
    * @protected
    */
-  protected abstract validate(value: CheckableValue): boolean;
+  protected abstract validate(value: SimpleValue): boolean;
 }

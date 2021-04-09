@@ -7,6 +7,7 @@ by conditions of **any complexity** in **declarative** style.
 
 If you want to work with `React` see [handy-filter-hook](https://github.com/Tohman21/handy-filter-hook)
 
+
 ## Installation
 npm:
 
@@ -15,6 +16,7 @@ npm:
 yarn:
 
     yarn add handy-filter
+
 
 ## Table of Contents  
 * [Usage](#usage)
@@ -26,14 +28,17 @@ yarn:
 * [Conditions](#conditions)
   * [Simple conditions](#simple-conditions)
   * [Logical conditions](#logical-conditions)
+  * [Range conditions](#range-conditions)
   * [RegExp conditions](#regexp-conditions)
   * [Independent use](#independent-use)
 * [Supported types](#supported-types)
 * [Filter options](#filter-options)
   * [addTo](#add-to)
 
+
 <a name="usage"></a>
 ## Usage
+
 
 <a name="base-usage"></a>
 ### Base usage
@@ -50,13 +55,14 @@ See more about [Conditions](#conditions).
 
 > **NOTE** that you can pass to the methods any number of conditions.
 
+
 <a name="with-an-array-of-objects"></a>
 ### With an array of objects
 You can use the Filter with an array of objects. 
 
 You can filter objects by properties of any deep.
 ```javascript
-import Filter, { eq, gt, not, eq } from 'handy-filter';
+import Filter, { eq, gt, not } from 'handy-filter';
 
 const example = [
   { num: 20, nested: { str: 'bar', prop: true }},
@@ -99,6 +105,7 @@ filter.filter(example);
 ```
 See more about [Conditions](#conditions).
 
+
 <a name="create-filter-in-runtime"></a>
 ### Create filter in runtime
 ```javascript
@@ -121,16 +128,17 @@ const filter1 = new Filter(lte(20));
 const filter2 = filter1.and(gt(10));
 ```
 
+
 <a name="any-value"></a>
 ## The \_\_any\_\_ value
 To make a condition always true, you can use the \_\_any\_\_. This can be useful if you don't want to change 
 a structure of the filter, but want to change his values. Or, for example, you want to disable a part of the 
 filter condition.
 ```javascript
-import Filter, { not, eq, lt, gt, gte } from 'handy-filter';
+import Filter, { ANY, not, eq, lt, gt, gte } from 'handy-filter';
 
 // This is equivalent to "value !== 20 and value < 100"
-new Filter(not(eq(20))).and(gt('__any__')).and(lt(100)).and(not(eq('__any__')));
+new Filter(not(eq(20))).and(gt('__any__')).and(lt(100)).and(not(eq(ANY)));
 
 // This will always be true
 new Filter(not(eq(20))).or(lt(100)).or(gte('__any__'));
@@ -138,8 +146,11 @@ new Filter(not(eq(20))).or(lt(100)).or(gte('__any__'));
 The Filter **automatically optimising** conditions containing **\_\_any\_\_** values, so you **don't need to worry** 
 about performance.
 
+
 <a name="conditions"></a>
 ## Conditions
+
+
 <a name="simple-conditions"></a>
 ### Simple conditions
 Simple conditions work with all [basic types](#supported-types).
@@ -152,18 +163,30 @@ Simple conditions work with all [basic types](#supported-types).
 |         Less        |  lt   |         Check if a value less than another value        |
 |  Less than or equal |  lte  |   Check if a value less than or equal to another value  |
 
+
 <a name="logical-conditions"></a>
 ### Logical conditions
 Can check values of any [base type](#supported-types), but only conditions can be passed as constructor parameters:
-1. [Simple conditions](#simple-conditions);
-1. [Logical conditions](#logical-conditions);
-1. [RegExp conditions](#regexp-conditions).
+* [Simple conditions](#simple-conditions);
+* [Logical conditions](#logical-conditions);
+* [Range conditions](#range-conditions);
+* [RegExp conditions](#regexp-conditions).
 
 |        Name         | Alias |                        Purpose                          |
 |:--------------------|:-----:|:-------------------------------------------------------:|
 |         And         |  and  |     Combine other conditions through logical "and"      |
 |         Or          |  or   |     Combine other conditions through logical "or"       |
 |         Not         |  not  |         Takes truth to falsity and vice versa           |
+
+
+<a name="range-conditions"></a>
+### Range conditions
+These conditions check if a value is in some range/set. Work with all [base types](#supported-types).
+
+|        Name         | Alias |                        Purpose                          |
+|:--------------------|:-----:|:-------------------------------------------------------:|
+|         In          |  inl  |         Check if a value is in a list of values         |
+
 
 <a name="regexp-conditions"></a>
 ### RegExp conditions
@@ -176,6 +199,7 @@ be passed as constructor parameters.
 |:--------------------|:-----:|:-------------------------------------------------------:|
 |       Contain       |  cnt  |         Check if a value contains another value         |
 | Ignore case contain |  icnt |         Check if a value contains another value         |
+
 
 <a name="independent-use"></a>
 ### Independent use
@@ -211,15 +235,17 @@ if (canWrite.check(user)) {
 1. string;
 1. undefined.
 
+
 <a name="filter-options"></a>
 ## Filter options
 The Filter constructor can receive options object as the second parameter.
 
+
 <a name="add-to"></a>
 ### addTo
-Values: 'all' | 'latest'.
-
-Default: 'latest'.
+|  Valid values | Default |
+|:--------------|:-------:|
+|  all, latest  | latest  |
 
 This option changes how the filter add new conditions using "and" and "or" methods:
 ```javascript

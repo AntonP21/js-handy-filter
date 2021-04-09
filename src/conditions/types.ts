@@ -1,8 +1,4 @@
-import { ANY } from './lib/constants';
-
 export type SimpleValue = bigint | boolean | Date | null | number | string | undefined;
-
-export type SimpleRange = SimpleValue[] | typeof ANY;
 
 export type RegExpValue = RegExp | string;
 

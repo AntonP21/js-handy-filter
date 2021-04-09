@@ -70,7 +70,7 @@ export default abstract class RegExpCondition implements ICondition {
    * The method for parsing condition value.
    * @protected
    */
-  protected parseValue(value: RegExpValue): [RegExpValue, boolean] {
+  protected parseValue(value: any): [RegExpValue, boolean] {
     if (typeof value === 'string') {
       return [value, value === ANY];
     }
