@@ -1,6 +1,6 @@
 import { hasProperty } from 'lib/utils';
 
-import { AnyObject, ICondition, PlainCondition, SimpleValue } from '../types';
+import { AnyObject, ICondition, SimpleValue } from '../types';
 
 import { SIMPLE_TYPES } from './constants';
 
@@ -38,15 +38,6 @@ export const isAnyObject = (value: any): value is AnyObject => (
  */
 export const isSimpleValue = (value: any): value is SimpleValue => (
   isNull(value) || SIMPLE_TYPES.includes(typeof value) || isDate(value)
-);
-
-/**
- * The function for checking is a value PlainCondition.
- *
- * @param value - The value to check;
- */
-export const isPlainCondition = <Type = any>(value: any): value is PlainCondition<Type> => (
-  Array.isArray(value) && value.length === 2 && typeof value[0] === 'string'
 );
 
 /**

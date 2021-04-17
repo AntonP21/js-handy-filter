@@ -1,14 +1,6 @@
 import { gt, gte } from 'conditions';
 
-import {
-  isAnyObject,
-  isDate,
-  isICondition,
-  isNull,
-  isPlainCondition,
-  isSimpleValue,
-  isUndefined,
-} from '../type-guards';
+import { isAnyObject, isDate, isICondition, isNull, isSimpleValue, isUndefined } from '../type-guards';
 
 describe('Type guards tests', () => {
   describe('isAnyObject tests', () => {
@@ -60,37 +52,6 @@ describe('Type guards tests', () => {
       [false, { field1: 'test', field2: { field: -123 } }],
     ])('should return %p if %p is passed', (expected, value) => {
       expect(isSimpleValue(value)).toBe(expected);
-    });
-  });
-
-  describe('isPlainCondition tests', () => {
-    it.each([
-      [true, ['some string', 1]],
-      [true, ['some string', -100]],
-      [true, ['some string', null]],
-      [true, ['some string', undefined]],
-      [true, ['some string', 'foo']],
-      [true, ['some string', 100n]],
-      [true, ['some string', true]],
-      [true, ['some string', false]],
-      [true, ['some string', new Date()]],
-      [true, ['some string', /regexp/]],
-      [false, [1, 'some string']],
-      [false, ['some string', 1, 'another string']],
-      [false, ['some string']],
-      [false, null],
-      [false, undefined],
-      [false, 1],
-      [false, -1],
-      [false, 1n],
-      [false, 'some string'],
-      [false, true],
-      [false, false],
-      [false, {}],
-      [false, { field1: 'test', field2: { field: 123 } }],
-      [false, new Date()],
-    ])('should return %p if %p is passed', (expected, value) => {
-      expect(isPlainCondition(value)).toBe(expected);
     });
   });
 

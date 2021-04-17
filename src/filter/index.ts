@@ -1,7 +1,6 @@
 import ConditionParser from 'condition-parser';
 import { and, or } from 'conditions';
 import { CheckableValue, Condition, ICondition } from 'conditions/types';
-import { isArray } from 'lib/type-guards';
 
 import { FilterOptions } from './types';
 
@@ -15,13 +14,9 @@ export default class Filter {
   private conditionStack: ICondition[] = [];
   private readonly options: Required<FilterOptions>;
 
-  constructor(conditions: Condition | Condition[], options: FilterOptions = {}) {
-    const parsed = ConditionParser.parse(conditions as any);
-
-    if (isArray(parsed)) {
-      this.conditionStack = parsed;
-    } else {
-      this.conditionStack = [parsed];
+  constructor(condition?: Condition, options: FilterOptions = {}) {
+    if (condition) {
+      this.conditionStack = [ConditionParser.parse(condition)];
     }
 
     this.options = {
@@ -63,7 +58,7 @@ export default class Filter {
 
     const stack = [...conditionStack];
     const latestCondition = stack.pop();
-    const filter = new Filter([], options);
+    const filter = new Filter(undefined, options);
 
     stack.push(latestCondition ? and(latestCondition, ...parsedConditions) : and(...parsedConditions));
     filter.conditionStack = stack;
@@ -82,7 +77,7 @@ export default class Filter {
   public or = (...conditions: Condition[]) => {
     const { conditionStack, options } = this;
     const stack = [...conditionStack];
-    const filter = new Filter([], options);
+    const filter = new Filter(undefined, options);
 
     stack.push(...ConditionParser.parse(conditions));
     filter.conditionStack = options.addTo === 'all' ? [or(...stack)] : stack;

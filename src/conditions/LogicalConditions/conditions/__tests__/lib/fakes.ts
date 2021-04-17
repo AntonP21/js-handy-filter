@@ -1,4 +1,4 @@
-import { Condition } from 'conditions/types';
+import { ICondition } from 'conditions/types';
 import LogicalCondition from '../../LogicalCondition';
 
 interface FakeProps {
@@ -13,7 +13,7 @@ interface FakeProps {
 class TestClass extends LogicalCondition {
   private readonly _validate: any;
 
-  constructor(args: Condition[], props: FakeProps) {
+  constructor(args: ICondition[], props: FakeProps) {
     super(...args);
 
     if (props.isAlwaysTrue) {

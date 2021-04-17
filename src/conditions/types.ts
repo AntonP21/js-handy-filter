@@ -14,17 +14,7 @@ export interface ICondition {
   readonly isAlwaysFalse: boolean;
 }
 
-export type SimpleConditionKey = 'eq' | 'gt' | 'gte' | 'lt' | 'lte' | 'ne';
-
-export type RegExpConditionKey = 'cnt' | 'icnt';
-
-export type ConditionKey = SimpleConditionKey | RegExpConditionKey;
-
-export type StringCondition = `${string}__${ConditionKey}` | ConditionKey;
-
-export type PlainCondition<Type> = [StringCondition, Type];
-
-export type Condition = ICondition | PlainCondition<SimpleValue | RegExpValue>;
+export type Condition = ICondition;
 
 export type ConditionConstructor<ClassType, ValueType> = (
   (new(value: ValueType) => ClassType) |

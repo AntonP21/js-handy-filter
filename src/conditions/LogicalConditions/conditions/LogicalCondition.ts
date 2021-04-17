@@ -1,5 +1,4 @@
-import ConditionParser from 'condition-parser';
-import { CheckableValue, Condition, ICondition } from '../../types';
+import { CheckableValue, ICondition } from '../../types';
 
 /**
  * The base class for logical conditions.
@@ -9,9 +8,9 @@ export default abstract class LogicalCondition implements ICondition {
   private _isAlwaysTrue: boolean = false;
   private _isAlwaysFalse: boolean = false;
 
-  constructor(...args: Condition[]) {
+  constructor(...args: ICondition[]) {
     if (args.length !== 0) {
-      this.conditions = this.optimise(ConditionParser.parse(args));
+      this.conditions = this.optimise(args);
     } else {
       this._isAlwaysTrue = true;
     }

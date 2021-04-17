@@ -133,21 +133,6 @@ describe('The Filter tests', () => {
       ]);
     });
 
-    test('Plain syntax', () => {
-      const example = [
-        { num: 20, nested: { str: 'bar', prop: true } },
-        { num: 100, nested: { str: 'bar', prop: false } },
-        { num: 100, nested: { str: 'foo', prop: null } },
-        { num: 10, nested: { str: 'bar', prop: true } },
-      ];
-      filter = new Filter(['num__gt', 20]).and(['nested.prop__eq', false]).or(['nested.str__eq', 'foo']);
-
-      expect(filter.filter(example)).toStrictEqual([
-        { num: 100, nested: { str: 'bar', prop: false } },
-        { num: 100, nested: { str: 'foo', prop: null } },
-      ]);
-    });
-
     test('Independent use', () => {
       const user = {
         active: true,

@@ -1,15 +1,15 @@
-import { and, or, not } from '../../lib/aliases';
+import { and, or, not, eq, gt, gte, lt } from 'conditions';
 
 import { createFakeCondition } from './lib/fakes';
 
 describe('"Not" condition tests', () => {
   describe('All conditions is true', () => {
     it.each([
-      [10, ['gt', 11]],
-      [{ numField: 11 }, ['numField__gte', 20]],
+      [10, gt(11)],
+      [{ numField: 11 }, gte('numField', 20)],
       [
         { numField: 10, obj: { numField: 100 } },
-        and(['numField__eq', 5], ['obj.numField__lt', 50]),
+        and(eq('numField', 5), lt('obj.numField', 50)),
       ],
     ])('#%# should return true when a condition is false', (checkableValue, condition) => {
       expect(not(condition as any).check(checkableValue as any)).toBeTruthy();
@@ -18,11 +18,11 @@ describe('"Not" condition tests', () => {
 
   describe('All conditions is false', () => {
     it.each([
-      [10, ['eq', 10]],
-      [{ numField: 11 }, ['numField__gte', 11]],
+      [10, eq(10)],
+      [{ numField: 11 }, gte('numField', 11)],
       [
         { numField: 10, obj: { numField: 100 } },
-        or(['numField__gt', 9], ['obj.numField__eq', 100]),
+        or(gt('numField', 9), eq('obj.numField', 100)),
       ],
     ])('#%# should return false when a condition is true', (checkableValue, condition) => {
       expect(not(condition as any).check(checkableValue as any)).toBeFalsy();
@@ -32,7 +32,7 @@ describe('"Not" condition tests', () => {
   describe('Optimisation tests', () => {
     it.each([
       [true, createFakeCondition({ isAlwaysTrue: true })()],
-      [false, ['lt', 100]],
+      [false, lt(100)],
     ])('#%# should set isAlwaysFalse if a condition is always true', (expected, condition) => {
       const testCondition = not(condition as any);
 
@@ -42,7 +42,7 @@ describe('"Not" condition tests', () => {
 
     it.each([
       [true, createFakeCondition({ isAlwaysFalse: true })()],
-      [false, ['gt', 9]],
+      [false, gt(9)],
     ])('should set isAlwaysTrue if a condition is always false', (expected, condition) => {
       const testCondition = not(condition as any);
 

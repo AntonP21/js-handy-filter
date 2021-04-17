@@ -21,7 +21,6 @@ yarn:
 ## Table of Contents  
 * [Usage](#usage)
   * [Base usage](#base-usage)
-  * [Plain syntax](#plain-syntax)
   * [With an array of objects](#with-an-array-of-objects)
   * [Create filter in runtime](#create-filter-in-runtime)
 * [The \_\_any\_\_ value](#any-value)
@@ -81,37 +80,13 @@ filter.filter(example);
 // ]
 ```
 
-<a name="plain-syntax"></a>
-### Plain syntax
-It is just another way to use conditions.
-```javascript
-import Filter from 'handy-filter';
-
-const example = [
-  { num: 20, nested: { str: 'bar', prop: true }},
-  { num: 100, nested: { str: 'bar', prop: false }},
-  { num: 100, nested: { str: 'foo', prop: null }},
-  { num: 10, nested: { str: 'bar', prop: true }},
-];
-
-// obj.num > 20 and obj.nested.prop !== null or obj.nested.str === 'foo'
-const filter = new Filter(['num__gt', 20]).and(['nested.prop__eq', false]).or(['nested.str__eq', 'foo']);
-
-filter.filter(example);
-// result is [
-//   { num: 100, nested: { str: 'bar', prop: false }},
-//   { num: 100, nested: { str: 'foo', prop: null }},
-// ]
-```
-See more about [Conditions](#conditions).
-
 
 <a name="create-filter-in-runtime"></a>
 ### Create filter in runtime
 ```javascript
 import Filter, { lt, lte, gt, eq } from 'handy-filter';
 
-let filter1 = new Filter(lte((20)));
+let filter1 = new Filter(lte(20));
 
 if (Math.random() < 0.5) {
   filter = filter.and(gt(10));
@@ -227,13 +202,13 @@ if (canWrite.check(user)) {
 
 <a name="supported-types"></a>
 ## Supported types
-1. bigint;
-1. boolean;
-1. Date;
-1. null;
-1. number;
-1. string;
-1. undefined.
+* bigint;
+* boolean;
+* Date;
+* null;
+* number;
+* string;
+* undefined.
 
 
 <a name="filter-options"></a>
