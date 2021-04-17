@@ -38,7 +38,15 @@ export default class Filter {
     const { conditionStack } = this;
     const condition = conditionStack.length === 1 ? conditionStack[0] : or(...conditionStack);
 
-    return conditionStack.length !== 0 ? target.filter(condition.check) : target;
+    if (condition.isAlwaysTrue) {
+      return target;
+    }
+
+    if (condition.isAlwaysFalse) {
+      return [];
+    }
+
+    return target.filter(condition.check);
   };
 
   /**

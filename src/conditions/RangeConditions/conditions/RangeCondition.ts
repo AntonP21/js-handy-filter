@@ -34,6 +34,8 @@ export default abstract class RangeCondition implements ICondition {
 
     if (rawValue === '__any__') {
       this.isAlwaysTrue = true;
+    } else if (rawValue.length === 0) {
+      this.isAlwaysFalse = true;
     } else {
       this.value = rawValue;
     }
@@ -42,6 +44,10 @@ export default abstract class RangeCondition implements ICondition {
   check = (value: CheckableValue) => {
     if (this.isAlwaysTrue) {
       return true;
+    }
+
+    if (this.isAlwaysFalse) {
+      return false;
     }
 
     if (this.field) {
