@@ -5,11 +5,11 @@ export type RegExpValue = RegExp | string;
 export type CheckableValue = SimpleValue | AnyObject;
 
 export interface AnyObject {
-  [key: string]: CheckableValue,
+  [key: string]: CheckableValue;
 }
 
 export interface ICondition {
-  check: (value: CheckableValue) => boolean,
+  check: (value: CheckableValue) => boolean;
   readonly isAlwaysTrue: boolean;
   readonly isAlwaysFalse: boolean;
 }
